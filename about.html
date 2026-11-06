@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Bluesky AC Services</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Added inline styles specifically for the mobile menu to ensure it works -->
+    <style>
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 45px; height: 45px; fill: none; stroke: var(--primary-blue); stroke-width: 8; stroke-linecap: round; }
+        .logo-icon path:nth-child(2) { stroke: var(--accent-blue); }
+        .logo-text { font-size: 24px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; }
+        .logo-text span { color: var(--accent-blue); }
+
+        /* Hamburger Icon Style */
+        .menu-toggle {
+            display: none;
+            font-size: 30px;
+            color: var(--primary-blue, #0056b3);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Mobile Menu Logic */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white, #ffffff);
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+                padding: 20px 0;
+                gap: 15px;
+                text-align: center;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" />
+                    <path d="M15,55 Q45,30 75,55 T95,55" stroke-width="10" />
+                    <path d="M5,75 Q40,50 70,75 T95,75" stroke-width="10" />
+                </svg>
+                <div class="logo-text">BLUESKY <span>AC SERVICES</span></div>
+            </a>
+            
+            <!-- Added ID to toggle menu -->
+            <div class="menu-toggle" id="mobile-menu">☰</div>
+            
+            <!-- Added ID to the list -->
+            <ul class="nav-links" id="nav-links-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="clients.html">Clients</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="contact.html" class="btn-quote">Get Quote</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>About Bluesky AC Services</h2>
+            <p>Delivering Quality, Reliability, and Total Customer Satisfaction</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>We introduce ourselves as one of the leading service provider companies in the field of Air Conditioning. With over 7 years of experience, we have been regularly providing services for various industries, business complexes, corporate offices, small shops, malls, and housing societies.</p>
+                <p>We cover everything from design engineering supervision, installation, and post-installation support for VRV/VRF, AHU systems, chillers, cooling towers, and more.</p>
+                <h3>Why Choose Us?</h3>
+                <ul>
+                    <li>ISO Certified & Safety Compliant</li>
+                    <li>Expert Team of HVAC Engineers & Technicians</li>
+                    <li>Pan-India Service & 24/7 Support</li>
+                    <li>Authorized Dealer for Blue Star</li>
+                </ul>
+            </div>
+            <div class="card" style="padding: 20px; background: var(--light-bg);">
+                <h3 style="color: var(--primary-blue);">Our Vision</h3>
+                <p>As part of our commitment to achieving the principles of health and safety in our workplace, we recognize our moral and legal responsibility to provide a safe and healthy work environment for employees, contractors, customers, and visitors.</p>
+                <p style="margin-top: 15px;">This commitment also extends to ensuring that our operations do not place the local community or environment at risk of injury, illness, or damage.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col"><h4>BLUESKY AC SERVICES</h4><p>Your trusted partner for complete HVAC & industrial cooling solutions.</p></div>
+            <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li></ul></div>
+            <div class="footer-col"><h4>Contact Us</h4><p>📍 123, Industrial Area, Navi Mumbai, Maharashtra - 400701</p><p>📞 +91 98765 43210</p></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved.</p></div>
+    </footer>
+
+    <!-- Added Inline Javascript for Menu Toggle -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const navLinksList = document.getElementById('nav-links-list');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinksList.classList.toggle('active');
+            
+            if(navLinksList.classList.contains('active')){
+                mobileMenuBtn.innerHTML = '✕';
+            } else {
+                mobileMenuBtn.innerHTML = '☰';
+            }
+        });
+    </script>
+    
+    <!-- Your original script tag kept here -->
+    <script src="script.js"></script>
+</body>
+</html>

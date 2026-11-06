@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Projects | Bluesky AC Services</title>
+    <style>
+        /* CSS RESET & VARIABLES */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-blue: #0056b3;
+            --accent-blue: #00a8ff;
+            --dark-navy: #0a192f;
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body { font-family: var(--font-main); line-height: 1.6; color: var(--text-dark); background-color: var(--white); }
+
+        /* NAVIGATION */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto; padding: 15px 20px;
+        }
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 45px; height: 45px; fill: none; stroke: var(--primary-blue); stroke-width: 8; stroke-linecap: round; }
+        .logo-icon path:nth-child(2) { stroke: var(--accent-blue); }
+        .logo-text { font-size: 24px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; }
+        .logo-text span { color: var(--accent-blue); }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
+        .btn-quote {
+            background: #ff8c00; color: var(--white)!important; padding: 10px 25px;
+            border-radius: 5px; text-decoration: none; font-weight: 600; transition: background 0.3s;
+        }
+        .btn-quote:hover { background: var(--accent-blue); }
+
+        /* --- NEW: HAMBURGER MENU STYLES --- */
+        .menu-toggle {
+            display: none; /* Hidden on desktop */
+            font-size: 30px;
+            color: var(--primary-blue);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            padding: 100px 20px; text-align: center; color: var(--white);
+        }
+        .page-header h1 { font-size: 3rem; margin-bottom: 10px; }
+
+        /* PROJECTS SECTION */
+        .projects-section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        
+        .project-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 25px; 
+        }
+        
+        .project-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: 300px;
+            cursor: pointer;
+        }
+        
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .project-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(10, 25, 47, 0.9));
+            padding: 30px 20px 20px;
+            color: var(--white);
+            transform: translateY(10px);
+            transition: transform 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .project-card:hover .project-overlay {
+            transform: translateY(0);
+        }
+        
+        .project-overlay h3 { font-size: 1.3rem; margin-bottom: 5px; }
+        .project-overlay p { color: var(--accent-blue); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;}
+
+        /* --- SCROLL FADE-IN ANIMATION STYLES --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* --- LIGHTBOX (POP-UP) STYLES --- */
+        .lightbox {
+            display: none; 
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 25, 47, 0.95); 
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .lightbox.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: 4px solid var(--white);
+            object-fit: contain;
+            background: #000;
+        }
+
+        .lightbox.show .lightbox-content {
+            transform: scale(1);
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 45px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        .close-lightbox:hover {
+            color: var(--accent-blue);
+        }
+
+        /* --- VISION & FACULTY SECTION STYLES --- */
+        .info-section {
+            background-color: var(--light-bg);
+            padding: 80px 20px;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr; }
+        }
+
+        .info-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary-blue);
+            position: relative;
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 86, 179, 0.1);
+            color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .info-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .info-card h2 {
+            font-size: 1.8rem;
+            color: var(--dark-navy);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .info-card p {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        /* Specific list styling for the Faculty & Services section */
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .service-list li .check-icon {
+            color: var(--accent-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1.2;
+        }
+
+        /* FOOTER */
+        footer { background: var(--dark-navy); color: var(--white); padding: 60px 20px 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { margin-bottom: 20px; color: var(--accent-blue); }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; color: #ccc; }
+        .footer-col ul li a { color: #ccc; text-decoration: none; transition: color 0.3s; }
+        .footer-col ul li a:hover { color: var(--white); }
+        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1c3a5e; color: #888; font-size: 0.9rem; }
+
+        /* --- RESPONSIVE / MOBILE STYLES --- */
+        @media (max-width: 768px) {
+            /* Mobile Menu Logic */
+            .menu-toggle {
+                display: block; /* Show hamburger */
+            }
+
+            .nav-links {
+                display: none; /* Hide menu by default */
+                flex-direction: column;
+                position: absolute;
+                top: 75px; /* Height of header */
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+                padding: 20px 0;
+                gap: 15px;
+                text-align: center;
+                z-index: 999;
+            }
+
+            /* Class added by JS to show menu */
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" />
+                    <path d="M15,55 Q45,30 75,55 T95,55" stroke-width="10" />
+                    <path d="M5,75 Q40,50 70,75 T95,75" stroke-width="10" />
+                </svg>
+                <div class="logo-text">BLUESKY <span>AC SERVICES</span></div>
+            </a>            
+            
+            <!-- Hamburger Icon Added Here -->
+            <div class="menu-toggle" id="mobile-menu">☰</div>
+
+            <!-- Added ID here for JavaScript -->
+            <ul class="nav-links" id="nav-links-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <!-- Moved Get Quote button inside the list for mobile alignment -->
+                <li><a href="contact.html" class="btn-quote">Get Quote</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h1>Our Projects</h1>
+        <p>A showcase of our recent installations, maintenance work, and satisfied clients.</p>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section class="projects-section">
+        <div class="project-grid">
+            
+            <!-- Project 1 -->
+            <div class="project-card reveal delay-1" onclick="openLightbox('images/tr-work.png')">
+                <img src="images/chiller-project.png" alt="Industrial Cooling Plant">
+                <div class="project-overlay">
+                    <h3>1000 TR Chiller Plant</h3>
+                    <p>Pune | Industrial Installation</p>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card reveal delay-2" onclick="openLightbox('images/vrc-work.png')">
+                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="VRF Installation">
+                <div class="project-overlay">
+                    <h3>VRF System Installation</h3>
+                    <p>Mumbai | Commercial Building</p>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card reveal delay-3" onclick="openLightbox('images/ahu-work.png')">
+                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="AHU Insulation">
+                <div class="project-overlay">
+                    <h3>AHU Insulation Work</h3>
+                    <p>Lupin Pharmaceuticals | Bhosari</p>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card reveal delay-1" onclick="openLightbox('images/ac-fitting.png')">
+                <img src="images/central-work.jpeg" alt="Factory Cooling">
+                <div class="project-overlay">
+                    <h3>Central AC Setup</h3>
+                    <p>Fabtech India Projects | Bhosari</p>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card reveal delay-2" onclick="openLightbox('images/ac-fitting.png')">
+                <img src="images/ac-work.png" alt="Office AC">
+                <div class="project-overlay">
+                    <h3>Cassette AC Fitting</h3>
+                    <p>ISA Spa | Aundh</p>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card reveal delay-3" onclick="openLightbox('images/bluesky-maintaince.png')">
+                <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Maintenance Work">
+                <div class="project-overlay">
+                    <h3>Package AC Maintenance</h3>
+                    <p>Voltas Unit | Commercial Complex</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NEW: VISION & FACULTY SECTION -->
+    <section class="info-section">
+        <div class="info-grid">
+            
+            <!-- Vision Card -->
+            <div class="info-card reveal delay-1">
+                <div class="info-icon">
+                    <!-- Shield/Eye Icon for Vision -->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </div>
+                <h2>Our Vision & Safety</h2>
+                <p>As part of our commitment to achieving the principles of health and safety in our workplace, we recognize our moral and legal responsibility to provide a safe and healthy work environment.</p>
+                <p>This commitment extends to ensuring that our operations do not place the local community or environment at risk of injury, illness, or damage.</p>
+            </div>
+
+            <!-- Faculty & Services Card -->
+            <div class="info-card reveal delay-2">
+                <div class="info-icon">
+                    <!-- Wrench Icon for Services -->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                    </svg>
+                </div>
+                <h2>Faculty & Services</h2>
+                <p>We provide comprehensive support for all major cooling and refrigeration systems:</p>
+                <ul class="service-list">
+                    <li><span class="check-icon">✔</span> Repairing & Maintenance</li>
+                    <li><span class="check-icon">✔</span> Installation & AMC</li>
+                    <li><span class="check-icon">✔</span> VRF, Package AC & Cassette AC</li>
+                    <li><span class="check-icon">✔</span> Split AC, AHU & Chiller</li>
+                    <li><span class="check-icon">✔</span> Cooling Tower, D-Fridge & Water Cooler</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>BLUESKY AC SERVICES</h4>
+                <p>Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul>
+                    <li>📍 123, Industrial Area, Navi Mumbai, Maharashtra - 400701</li>
+                    <li>📞 +91 98765 43210</li>
+                    <li>✉️ info@blueskyacservices.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BLUESKY AC SERVICES. All Rights Reserved. | Privacy Policy | Terms & Conditions</p>
+        </div>
+    </footer>
+
+    <!-- LIGHTBOX HTML STRUCTURE -->
+    <div id="imageLightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightboxImg" src="" alt="Project Image">
+    </div>
+
+    <!-- JAVASCRIPT FOR ANIMATIONS AND POP-UP -->
+    <script>
+        // --- 1. MOBILE MENU TOGGLE LOGIC ---
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const navLinksList = document.getElementById('nav-links-list');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinksList.classList.toggle('active');
+            
+            // Change icon to 'X' when open
+            if(navLinksList.classList.contains('active')){
+                mobileMenuBtn.innerHTML = '✕';
+            } else {
+                mobileMenuBtn.innerHTML = '☰';
+            }
+        });
+
+        // --- 2. LIGHTBOX POP-UP LOGIC ---
+        const lightbox = document.getElementById("imageLightbox");
+        const lightboxImg = document.getElementById("lightboxImg");
+        const closeBtn = document.querySelector(".close-lightbox");
+
+        function openLightbox(imageSrc) {
+            lightboxImg.src = imageSrc;         
+            lightbox.classList.add("show");     
+            document.body.style.overflow = "hidden"; 
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove("show");
+            document.body.style.overflow = "auto"; 
+            setTimeout(() => { lightboxImg.src = ""; }, 300); 
+        }
+
+        closeBtn.addEventListener("click", closeLightbox);
+
+        lightbox.addEventListener("click", function(e) {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape" && lightbox.classList.contains("show")) {
+                closeLightbox();
+            }
+        });
+
+        // --- 3. SCROLL FADE-IN ANIMATION LOGIC ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        });
+    </script>
+
+</body>
+</html>

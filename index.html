@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluesky AC Services | HVAC & Industrial Cooling Solutions</title>
+    <style>
+        /* CSS RESET & VARIABLES */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-blue: #0056b3;
+            --accent-blue: #00a8ff;
+            --dark-navy: #0a192f;
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body { font-family: var(--font-main); line-height: 1.6; color: var(--text-dark); background-color: var(--white); }
+
+        /* NAVIGATION */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto; padding: 15px 20px;
+        }
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 45px; height: 45px; fill: none; stroke: var(--primary-blue); stroke-width: 8; stroke-linecap: round; }
+        .logo-icon path:nth-child(2) { stroke: var(--accent-blue); }
+        .logo-text { font-size: 24px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; }
+        .logo-text span { color: var(--accent-blue); }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
+        .btn-quote { background:#ff8c00; color: var(--white)!important; padding: 10px 25px; border-radius: 5px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
+        .btn-quote:hover { background: var(--accent-blue); }
+
+        /* --- HAMBURGER MENU STYLES --- */
+        .menu-toggle {
+            display: none; 
+            font-size: 30px;
+            color: var(--primary-blue);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            height: 75vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white); padding: 0 20px;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; max-width: 900px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 700px; }
+        .hero-buttons { display: flex; gap: 20px; }
+        .btn-primary { background: var(--accent-blue); color: var(--white); padding: 15px 35px; text-decoration: none; border-radius: 5px; font-weight: 700; transition: transform 0.3s; }
+        .btn-secondary { background: transparent; color: var(--white); padding: 15px 35px; text-decoration: none; border-radius: 5px; font-weight: 700; border: 2px solid var(--white); transition: all 0.3s; }
+        .btn-primary:hover { transform: translateY(-3px); background: #0097e6; }
+        .btn-secondary:hover { background: var(--white); color: var(--dark-navy); }
+
+        /* STATS SECTION */
+        .stats-container {
+            max-width: 1200px;
+            margin: -50px auto 40px; 
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .stat-card {
+            background: var(--white); border-radius: 10px; padding: 30px 20px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-bottom: 4px solid var(--primary-blue); transition: transform 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-icon { width: 40px; height: 40px; margin: 0 auto 10px auto; display: block; color: var(--primary-blue); }
+        .stat-card h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 5px; font-weight: 800; }
+        .stat-card p { color: var(--dark-navy); font-weight: 600; font-size: 1rem; }
+
+        /* REWARDS / CERTIFICATION SECTION */
+        .cert-section {
+            background-color: var(--primary-blue); 
+            padding: 50px 20px;
+            color: var(--white);
+        }
+        .cert-container {
+            max-width: 1000px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap;
+        }
+        .cert-image {
+            width: 140px; height: auto; border: 3px solid var(--white); border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: var(--white); cursor: pointer; transition: transform 0.3s;
+        }
+        .cert-image:hover { transform: scale(1.05); }
+        .cert-text h3 { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; font-weight: 600; }
+        .cert-text h2 { font-size: 2.2rem; margin-bottom: 10px; font-weight: 800; line-height: 1.2; }
+        .cert-text p { font-size: 1.1rem; opacity: 0.95; max-width: 600px; }
+
+        /* SERVICES SECTION */
+        .services { padding: 80px 20px; max-width: 1200px; margin: 0 auto; background: var(--white); }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 10px; }
+        .section-title p { color: var(--text-light); }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card {
+            background: var(--white); border-radius: 10px; overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #eee;
+        }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .service-img { width: 100%; height: 200px; object-fit: cover; }
+        .service-content { padding: 25px; }
+        .service-content h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--dark-navy); }
+        .service-content p { color: var(--text-light); font-size: 0.95rem; }
+        .service-link { display: inline-block; margin-top: 15px; color: var(--primary-blue); text-decoration: none; font-weight: 600; }
+        .service-link:hover { text-decoration: underline; }
+
+        /* SCROLLING LOGOS SECTION */
+        .logos-section { padding: 60px 0; background: var(--light-bg); overflow: hidden; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea;}
+        .logos-section h2 { text-align: center; color: var(--primary-blue); font-size: 1.6rem; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px;}
+        
+        .marquee-container {
+            display: flex; overflow: hidden; user-select: none; gap: 40px;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        
+        .marquee-content {
+            flex-shrink: 0; display: flex; align-items: center; justify-content: space-around;
+            gap: 40px; min-width: 100%; animation: scroll 50s linear infinite;
+        }
+        .marquee-content.reverse { animation-direction: reverse; animation-duration: 35s; }
+
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(-100% - 40px)); }
+        }
+
+        /* Real Logo Image Styling */
+        .logo-img {
+            height: 95px; 
+            max-width: 210px;
+            min-width: 160px;
+            object-fit: contain;
+            background: var(--white);
+            padding: 16px 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform;
+            display: block;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.15);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+        }
+
+        /* --- MODAL & LIGHTBOX STYLES --- */
+        .modal, .lightbox {
+            display: none; position: fixed; z-index: 9999; left: 0; top: 0;
+            width: 100%; height: 100%; background-color: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(5px); align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease; flex-direction: column;
+        }
+        .modal.show, .lightbox.show { display: flex; opacity: 1; }
+        
+        .modal-content, .lightbox-content {
+            max-width: 90%; max-height: 85vh;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            border: 4px solid var(--white); border-radius: 8px;
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            object-fit: contain; background: #000;
+        }
+        .modal.show .modal-content, .lightbox.show .lightbox-content {
+            transform: scale(1);
+        }
+
+        .close-modal, .close-lightbox {
+            position: absolute; top: 20px; right: 35px;
+            color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; line-height: 1;
+        }
+        .close-modal:hover, .close-lightbox:hover { color: var(--accent-blue); }
+
+        /* FOOTER */
+        footer { background: var(--dark-navy); color: var(--white); padding: 60px 20px 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { margin-bottom: 20px; color: var(--accent-blue); }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; color: #ccc; }
+        .footer-col ul li a { color: #ccc; text-decoration: none; transition: color 0.3s; }
+        .footer-col ul li a:hover { color: var(--white); }
+        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1c3a5e; color: #888; font-size: 0.9rem; }
+
+        /* --- RESPONSIVE / MOBILE STYLES --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-buttons { flex-direction: column; }
+            .cert-container { flex-direction: column; text-align: center; }
+            .stats-container { margin-top: 20px; } 
+            .logo-img { height: 45px; max-width: 120px; }
+
+            .menu-toggle { display: block; }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+                padding: 20px 0;
+                gap: 15px;
+                text-align: center;
+                z-index: 999;
+            }
+
+            .nav-links.active { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" />
+                    <path d="M15,55 Q45,30 75,55 T95,55" stroke-width="10" />
+                    <path d="M5,75 Q40,50 70,75 T95,75" stroke-width="10" />
+                </svg>
+                <div class="logo-text">BLUESKY <span>AC SERVICES</span></div>
+            </a>
+            
+            <div class="menu-toggle" id="mobile-menu">☰</div>
+
+            <ul class="nav-links" id="nav-links-list">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="contact.html" class="btn-quote">Get Quote</a></li> 
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>Complete HVAC & Industrial Cooling Solutions</h1>
+        <p>Design • Installation • Maintenance • Service for Industrial & Commercial Cooling Systems Across India</p>
+        <div class="hero-buttons">
+            <a href="services.html" class="btn-primary">Our Services</a>
+            <a href="contact.html" class="btn-secondary">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="stats-container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <h2>25+</h2>
+                <p>Years of Experience</p>
+            </div>
+            <div class="stat-card">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line><line x1="12" y1="22" x2="12" y2="22.01"></line><path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"></path></svg>
+                <h2>500+</h2>
+                <p>Projects Completed</p>
+            </div>
+            <div class="stat-card">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <h2>120+</h2>
+                <p>Satisfied Clients</p>
+            </div>
+            <div class="stat-card">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <h2>24/7</h2>
+                <p>Service Support</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- REWARDS / CERTIFICATION SECTION -->
+    <section class="cert-section">
+        <div class="cert-container">
+            <img src="https://i.postimg.cc/FKLxgfdN/award-certificate.png" alt="Certificate" class="cert-image" id="certImg" style="padding: 10px;">
+            <div class="cert-text">
+                <h3>CERTIFICATION & REWARDS</h3>
+                <h2>Preferred Supplier & Excellence Award</h2>
+                <p>Recognized for excellence in Products & Service Performance, Process control, and commitment to customer satisfaction.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL POPUP FOR CERTIFICATE -->
+    <div id="certModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg" src="https://i.postimg.cc/FKLxgfdN/award-certificate.png" alt="Enlarged Certificate">
+    </div>
+
+    <!-- SERVICES SECTION -->
+    <section class="services">
+        <div class="section-title">
+            <h2>Our Services</h2>
+            <p>Comprehensive HVAC solutions tailored for industrial and commercial needs</p>
+        </div>
+        <div class="service-grid">
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="VRF System" class="service-img">
+                <div class="service-content">
+                    <h3>VRF System</h3>
+                    <p>Energy efficient VRF cooling solutions for offices & buildings.</p>
+                    <a href="services.html" class="service-link">Learn More →</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="AHU System" class="service-img">
+                <div class="service-content">
+                    <h3>AHU System</h3>
+                    <p>Custom AHU installation and ducting for optimal airflow.</p>
+                    <a href="services.html" class="service-link">Learn More →</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chiller Plants" class="service-img">
+                <div class="service-content">
+                    <h3>Chiller Plants</h3>
+                    <p>Industrial chiller plants for manufacturing & facilities.</p>
+                    <a href="services.html" class="service-link">Learn More →</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Central AC" class="service-img">
+                <div class="service-content">
+                    <h3>Central AC Systems</h3>
+                    <p>Complete centralized AC systems for commercial spaces.</p>
+                    <a href="services.html" class="service-link">Learn More →</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maintenance" class="service-img">
+                <div class="service-content">
+                    <h3>Maintenance Services</h3>
+                    <p>24/7 preventive maintenance & troubleshooting support.</p>
+                    <a href="services.html" class="service-link">Learn More →</a>
+                </div>
+            </div>
+            
+            <!-- Products Card (Now Clickable) -->
+            <div class="service-card" onclick="openLightbox('images/products-bluesky.png')" style="cursor: pointer;">
+                <img src="images/product.jpeg" alt="Our Products" class="service-img">
+                <div class="service-content">
+                    <h3>Our Products</h3>
+                    <p>High-quality HVAC equipment for residential and commercial use. Click to view catalogue.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SCROLLING LOGOS SECTION (Clients) -->
+    <section class="logos-section">
+        <h2>Our Esteemed Clients</h2>
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <img src="images/lupin_logo.png" alt="Lupin" class="logo-img">
+                <img src="images/fabtech_logo.png" alt="Fabtech" class="logo-img">
+                <img src="images/emerson.png" alt="Emerson" class="logo-img">
+                <img src="images/logo.png" alt="Yessworks" class="logo-img">
+                <img src="images/bal_ganesh.png" alt="Shri Bal ganesh" class="logo-img">
+                <img src="images/pavilion.png" alt="Pavilion Data" class="logo-img">
+                <img src="images/lifepoint.jpg" alt="LifePoint" class="logo-img">
+                <img src="images/hyt.png" alt="HytEngineering" class="logo-img">
+                <img src="images/mekins.png" alt="Mekins" class="logo-img">
+                <img src="images/ksh.jpg" alt="KSH" class="logo-img">
+                <img src="images/nike.png" alt="Nike" class="logo-img">
+               <img src="images/puma.png" alt="Puma" class="logo-img">
+               <img src="images/ganesh.png" alt="Shree Ganesh" class="logo-img">
+               <img src="images/isa-spa.jpeg" alt="ISA Spa" class="logo-img">
+               <img src="images/lupin_logo.png" alt="Lupin" class="logo-img">
+                <img src="images/fabtech_logo.png" alt="Fabtech" class="logo-img">
+                <img src="images/emerson.png" alt="Emerson" class="logo-img">
+                <img src="images/logo.png" alt="Yessworks" class="logo-img">
+                <img src="images/bal_ganesh.png" alt="Shri Bal ganesh" class="logo-img">
+                <img src="images/pavilion.png" alt="Pavilion Data" class="logo-img">
+                <img src="images/lifepoint.jpg" alt="LifePoint" class="logo-img">
+                <img src="images/hyt.png" alt="HytEngineering" class="logo-img">
+                <img src="images/mekins.png" alt="Mekins" class="logo-img">
+                <img src="images/ksh.jpg" alt="KSH" class="logo-img">
+                <img src="images/nike.png" alt="Nike" class="logo-img">
+               <img src="images/puma.png" alt="Puma" class="logo-img">
+               <img src="images/ganesh.png" alt="Shree Ganesh" class="logo-img">
+               <img src="images/pepe_jeans.png" alt="PapeJeans" class="logo-img">
+               <img src="images/isa-spa.jpeg" alt="ISA Spa" class="logo-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- SCROLLING LOGOS SECTION (Partners) -->
+    <section class="logos-section" style="background: var(--white);">
+        <h2>Dealing & Work With</h2>
+        <div class="marquee-container">
+            <div class="marquee-content reverse">
+                <img src="images/Blue_Star.png" alt="Blue Star" class="logo-img">
+                <img src="images/Daikin.png" alt="Daikin" class="logo-img">
+                <img src="images/LG.png" alt="LG" class="logo-img">
+                <img src="images/Voltas.png" alt="Voltas" class="logo-img">
+                <img src="images/Onida.png" alt="Onida" class="logo-img">
+                <img src="images/Hitachi-logo.jpg" alt="Hitachi" class="logo-img">
+                <img src="images/O'General.png" alt="O'General" class="logo-img">
+                <img src="images/Panasonic.png" alt="Panasonic" class="logo-img">
+                <img src="images/Samsung.png" alt="Samsung" class="logo-img">
+                <img src="images/Carrier.png" alt="Carrier" class="logo-img">
+                <img src="images/Mitsubishi.png" alt="Mitsubishi" class="logo-img">
+            </div>
+            <!-- Duplicated for seamless infinite scroll -->
+            <div class="marquee-content reverse">
+                <img src="images/Blue_Star.png" alt="Blue Star" class="logo-img">
+                <img src="images/Daikin.png" alt="Daikin" class="logo-img">
+                <img src="images/LG.png" alt="LG" class="logo-img">
+                <img src="images/Voltas.png" alt="Voltas" class="logo-img">
+                <img src="images/Onida.png" alt="Onida" class="logo-img">
+                <img src="images/Hitachi-logo.jpg" alt="Hitachi" class="logo-img">
+                <img src="images/O'General.png" alt="O'General" class="logo-img">
+                <img src="images/Panasonic.png" alt="Panasonic" class="logo-img">
+                <img src="images/Samsung.png" alt="Samsung" class="logo-img">
+                <img src="images/Carrier.png" alt="Carrier" class="logo-img">
+                <img src="images/Mitsubishi.png" alt="Mitsubishi" class="logo-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>BLUESKY AC SERVICES</h4>
+                <p>Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Our Services</h4>
+                <ul>
+                    <li>VRF System</li>
+                    <li>Chiller Plants</li>
+                    <li>Central AC</li>
+                    <li>Maintenance Services</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul>
+                    <li>📍 123, Industrial Area, Navi Mumbai, Maharashtra - 400701</li>
+                    <li>📞 +91 98765 43210</li>
+                    <li>✉️ info@blueskyacservices.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BLUESKY AC SERVICES. All Rights Reserved. | Privacy Policy | Terms & Conditions</p>
+        </div>
+    </footer>
+
+    <!-- LIGHTBOX HTML STRUCTURE FOR PRODUCTS -->
+    <div id="imageLightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightboxImg" src="" alt="Product Image">
+    </div>
+
+    <!-- JAVASCRIPT FOR MENU, CERTIFICATE, AND PRODUCT LIGHTBOX -->
+    <script>
+        // --- 1. MOBILE MENU TOGGLE LOGIC ---
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const navLinksList = document.getElementById('nav-links-list');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinksList.classList.toggle('active');
+            
+            if(navLinksList.classList.contains('active')){
+                mobileMenuBtn.innerHTML = '✕';
+            } else {
+                mobileMenuBtn.innerHTML = '☰';
+            }
+        });
+
+        // --- 2. CERTIFICATE POPUP LOGIC ---
+        var certModal = document.getElementById("certModal");
+        var certImg = document.getElementById("certImg");
+        var closeCertBtn = document.querySelector(".close-modal");
+
+        certImg.onclick = function(){ certModal.style.display = "flex"; }
+        closeCertBtn.onclick = function() { certModal.style.display = "none"; }
+        
+        // --- 3. PRODUCTS LIGHTBOX POP-UP LOGIC ---
+        const lightbox = document.getElementById("imageLightbox");
+        const lightboxImg = document.getElementById("lightboxImg");
+        const closeLightboxBtn = document.querySelector(".close-lightbox");
+
+        function openLightbox(imageSrc) {
+            lightboxImg.src = imageSrc;         
+            lightbox.classList.add("show");     
+            document.body.style.overflow = "hidden"; 
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove("show");
+            document.body.style.overflow = "auto"; 
+            setTimeout(() => { lightboxImg.src = ""; }, 300); 
+        }
+
+        closeLightboxBtn.addEventListener("click", closeLightbox);
+
+        lightbox.addEventListener("click", function(e) {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Close either modal on Escape key
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape") {
+                if (lightbox.classList.contains("show")) closeLightbox();
+                if (certModal.style.display === "flex") certModal.style.display = "none";
+            }
+        });
+
+        // Global window click to close cert modal
+        window.onclick = function(event) { 
+            if (event.target == certModal) { 
+                certModal.style.display = "none"; 
+            } 
+        }
+    </script>
+
+</body>
+</html>
