@@ -3,58 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clients | Bluesky AC Services</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Our Clients & Partners | Bluesky AC Services</title>
+    <style>
+        /* CSS RESET & VARIABLES */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-blue: #0056b3;
+            --accent-blue: #00a8ff;
+            --dark-navy: #0a192f;
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body { font-family: var(--font-main); line-height: 1.6; color: var(--text-dark); background-color: var(--white); }
+
+        /* NAVIGATION */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto; padding: 15px 20px;
+        }
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 45px; height: 45px; fill: none; stroke: var(--primary-blue); stroke-width: 8; stroke-linecap: round; }
+        .logo-icon path:nth-child(2) { stroke: var(--accent-blue); }
+        .logo-text { font-size: 24px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; }
+        .logo-text span { color: var(--accent-blue); }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
+        .btn-quote { background: #ff8c00; color: var(--white) !important; padding: 10px 25px; border-radius: 5px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
+        .btn-quote:hover { background: var(--accent-blue); }
+
+        /* HAMBURGER MENU */
+        .menu-toggle { display: none; font-size: 30px; color: var(--primary-blue); cursor: pointer; z-index: 1001; }
+
+        /* PAGE HEADER */
+        .page-header {
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            padding: 100px 20px; text-align: center; color: var(--white);
+        }
+        .page-header h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 800; }
+        .page-header p { font-size: 1.2rem; color: #e0e0e0; max-width: 700px; margin: 0 auto; }
+
+        /* LOGOS SECTIONS */
+        .clients-section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;}
+        .section-title p { color: var(--text-light); font-size: 1.1rem; }
+
+        /* Updated Grid and Cards for seamless look */
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .logo-card {
+            /* Removed white background and padding to blend into the page */
+            background: transparent; 
+            border: none;
+            width: 100%;
+            height: 120px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Simple hover effect: just a slight scale up */
+        .logo-card:hover {
+            transform: scale(1.1);
+        }
+
+        .logo-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            /* Added a soft drop shadow to make logos pop without a box */
+            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1)); 
+        }
+
+        /* Separator Line */
+        .separator {
+            width: 100%;
+            height: 1px;
+            background: #eaeaea;
+            margin: 40px 0;
+        }
+
+        /* FOOTER */
+        footer { background: var(--dark-navy); color: var(--white); padding: 60px 20px 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { margin-bottom: 20px; color: var(--accent-blue); }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; color: #ccc; }
+        .footer-col ul li a { color: #ccc; text-decoration: none; transition: color 0.3s; }
+        .footer-col ul li a:hover { color: var(--white); }
+        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1c3a5e; color: #888; font-size: 0.9rem; }
+
+        /* --- RESPONSIVE / MOBILE STYLES --- */
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            
+            /* Make sure logos stay a good size on mobile */
+            .logo-grid { 
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+                gap: 20px; 
+            }
+            .logo-card { 
+                height: 90px; 
+            }
+
+            /* Mobile Menu Logic */
+            .menu-toggle { display: block; }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+                padding: 20px 0;
+                gap: 15px;
+                text-align: center;
+                z-index: 999;
+            }
+
+            .nav-links.active { display: flex; }
+        }
+    </style>
 </head>
 <body>
+
+    <!-- HEADER -->
     <header>
-        <div class="nav-container">
-<a href="index.html" class="logo-container">
+        <nav>
+            <a href="index.html" class="logo-container">
                 <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" />
                     <path d="M15,55 Q45,30 75,55 T95,55" stroke-width="10" />
                     <path d="M5,75 Q40,50 70,75 T95,75" stroke-width="10" />
                 </svg>
                 <div class="logo-text">BLUESKY <span>AC SERVICES</span></div>
-            </a>            <div class="menu-toggle">☰</div>
-            <ul class="nav-links">
+            </a>
+            
+            <div class="menu-toggle" id="mobile-menu">☰</div>
+
+            <ul class="nav-links" id="nav-links-list">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="clients.html" class="active">Clients</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="contact.html" class="btn-quote">Get Quote</a></li>
+                <li><a href="contact.html" class="btn-quote">Get Quote</a></li> 
             </ul>
-        </div>
+        </nav>
     </header>
 
-    <section class="section">
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h1>Our Clients & Partners</h1>
+        <p>Trusted by leading companies across industries and dealing with top HVAC brands in India.</p>
+    </section>
+
+    <!-- ESTEEMED CLIENTS SECTION -->
+    <section class="clients-section">
         <div class="section-title">
             <h2>Our Esteemed Clients</h2>
-            <p>Trusted by leading companies across industries</p>
+            <p>We are proud to have served these reputed organizations.</p>
         </div>
-        <div class="grid-container">
-            <div class="card" style="text-align: center; padding: 40px;"><h3>LUPIN</h3></div>
-            <div class="card" style="text-align: center; padding: 40px;"><h3>Fabtech</h3></div>
-            <div class="card" style="text-align: center; padding: 40px;"><h3>YesssWorks</h3></div>
-            <div class="card" style="text-align: center; padding: 40px;"><h3>EMERSON</h3></div>
-            <div class="card" style="text-align: center; padding: 40px;"><h3>paviliondata</h3></div>
-            <div class="card" style="text-align: center; padding: 40px;"><h3>LIFEPOINT</h3></div>
-            <div class="card" style="text-align: center; padding: 40px;"><h3>Mekins</h3></div>
-            <div class="card" style="text-align: center; padding: 40px;"><h3>KSH Logistics</h3></div>
-            <div class="card" style="text-align: center; padding: 40px;"><h3>Isā Spa</h3></div>
+        
+        <div class="logo-grid">
+            <div class="logo-card"><img src="images/lupin_logo.png" alt="Lupin Pharmaceuticals"></div>
+            <div class="logo-card"><img src="images/fabtech_logo.png" alt="Fabtech Projects"></div>
+            <div class="logo-card"><img src="images/emerson.png" alt="Emerson"></div>
+            <div class="logo-card"><img src="images/logo.png" alt="YesssWorks"></div>
+            <div class="logo-card"><img src="images/bal_ganesh.png" alt="Shri Bal Ganesh Developers"></div>
+            <div class="logo-card"><img src="images/pavilion.png" alt="Pavilion Data"></div>
+            <div class="logo-card"><img src="images/lifepoint.jpg" alt="Lifepoint Hospital"></div>
+            <div class="logo-card"><img src="images/hyt.png" alt="HYT Engineering"></div>
+            <div class="logo-card"><img src="images/mekins.png" alt="Mekins Storage"></div>
+            <div class="logo-card"><img src="images/ksh.jpg" alt="KSH Logistics"></div>
+            <div class="logo-card"><img src="images/nike.png" alt="Nike"></div>
+            <div class="logo-card"><img src="images/puma.png" alt="Puma"></div>
+            <div class="logo-card"><img src="images/ganesh.png" alt="Shree Ganesh Engineering"></div>
+            <div class="logo-card"><img src="images/pepe_jeans.png" alt="Pepe Jeans"></div>
+            <div class="logo-card"><img src="images/isa-spa.jpeg" alt="ISA Spa"></div>
         </div>
     </section>
 
+    <!-- SEPARATOR LINE -->
+    <div class="separator"></div>
+
+    <!-- PARTNERS / DEALING WITH SECTION -->
+    <section class="clients-section" style="padding-top: 0;">
+        <div class="section-title">
+            <h2>Dealing & Work With</h2>
+            <p>Authorized dealers and trusted partners for top HVAC brands.</p>
+        </div>
+        
+        <div class="logo-grid">
+            <div class="logo-card"><img src="images/Blue_Star.png" alt="Blue Star"></div>
+            <div class="logo-card"><img src="images/Daikin.png" alt="Daikin"></div>
+            <div class="logo-card"><img src="images/LG.png" alt="LG"></div>
+            <div class="logo-card"><img src="images/Voltas.png" alt="Voltas"></div>
+            <div class="logo-card"><img src="images/Onida.png" alt="Onida"></div>
+            <div class="logo-card"><img src="images/Hitachi-logo.jpg" alt="Hitachi"></div>
+            <div class="logo-card"><img src="images/O'General.png" alt="O'General"></div>
+            <div class="logo-card"><img src="images/Panasonic.png" alt="Panasonic"></div>
+            <div class="logo-card"><img src="images/Samsung.png" alt="Samsung"></div>
+            <div class="logo-card"><img src="images/Carrier.png" alt="Carrier"></div>
+            <div class="logo-card"><img src="images/Mitsubishi.png" alt="Mitsubishi"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer>
         <div class="footer-grid">
-            <div class="footer-col"><h4>BLUESKY AC SERVICES</h4><p>Your trusted partner for complete HVAC & industrial cooling solutions.</p></div>
-            <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li></ul></div>
-            <div class="footer-col"><h4>Contact Us</h4><p>📍 123, Industrial Area, Navi Mumbai, Maharashtra - 400701</p><p>📞 +91 98765 43210</p></div>
+            <div class="footer-col">
+                <h4>BLUESKY AC SERVICES</h4>
+                <p>Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="clients.html">Clients</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul>
+                                        <li>📍 Office No 11, Ram Radha Appartment, B Building, Dange Chowk, Near Spandan Hospital, Near Sagar Medical, Near Maheri Hospital, Wakad Road, Chinchwad, Pune-411035, Maharashtra</li>
+                    <li>📞 +91 7947120803</li>
+                    <li>✉️ info@blueskyacservices.com</li>
+                </ul>
+            </div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2024 BLUESKY AC SERVICES. All Rights Reserved.</p></div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved. | Privacy Policy | Terms & Conditions</p>
+        </div>
     </footer>
-    <script src="script.js"></script>
+
+    <!-- JAVASCRIPT FOR MOBILE MENU -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const navLinksList = document.getElementById('nav-links-list');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinksList.classList.toggle('active');
+            
+            if(navLinksList.classList.contains('active')){
+                mobileMenuBtn.innerHTML = '✕';
+            } else {
+                mobileMenuBtn.innerHTML = '☰';
+            }
+        });
+    </script>
+
 </body>
 </html>

@@ -143,12 +143,12 @@
 
         /* Real Logo Image Styling */
         .logo-img {
-            height: 95px; 
-            max-width: 210px;
-            min-width: 160px;
+            height: 100px; /* Increased base size */
+            max-width: 220px;
+            min-width: 170px;
             object-fit: contain;
             background: var(--white);
-            padding: 16px 20px;
+            padding: 15px 20px;
             border-radius: 10px;
             box-shadow: 0 6px 18px rgba(0,0,0,0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -204,7 +204,12 @@
             .hero-buttons { flex-direction: column; }
             .cert-container { flex-direction: column; text-align: center; }
             .stats-container { margin-top: 20px; } 
-            .logo-img { height: 45px; max-width: 120px; }
+            
+            /* REMOVED the shrinking logo rule so they stay large on mobile */
+            .logo-img {
+                height: 80px; 
+                min-width: 140px;
+            }
 
             .menu-toggle { display: block; }
 
@@ -248,6 +253,7 @@
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="projects.html">Projects</a></li>
+                <li><a href="clients.html">Clients</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="contact.html" class="btn-quote">Get Quote</a></li> 
             </ul>
@@ -293,7 +299,7 @@
     <!-- REWARDS / CERTIFICATION SECTION -->
     <section class="cert-section">
         <div class="cert-container">
-            <img src="https://i.postimg.cc/FKLxgfdN/award-certificate.png" alt="Certificate" class="cert-image" id="certImg" style="padding: 10px;">
+            <img src="images/award_certificate.png" alt="Certificate" class="cert-image" id="certImg" style="padding: 10px;">
             <div class="cert-text">
                 <h3>CERTIFICATION & REWARDS</h3>
                 <h2>Preferred Supplier & Excellence Award</h2>
@@ -305,7 +311,7 @@
     <!-- MODAL POPUP FOR CERTIFICATE -->
     <div id="certModal" class="modal">
         <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImg" src="https://i.postimg.cc/FKLxgfdN/award-certificate.png" alt="Enlarged Certificate">
+        <img class="modal-content" id="modalImg" src="images/award_certificate.png" alt="Enlarged Certificate">
     </div>
 
     <!-- SERVICES SECTION -->
@@ -382,7 +388,7 @@
                 <img src="images/lifepoint.jpg" alt="LifePoint" class="logo-img">
                 <img src="images/hyt.png" alt="HytEngineering" class="logo-img">
                 <img src="images/mekins.png" alt="Mekins" class="logo-img">
-                <img src="images/ksh.jpg" alt="KSH" class="logo-img">
+                <img src="images/KSH.jpg" alt="KSH" class="logo-img">
                 <img src="images/nike.png" alt="Nike" class="logo-img">
                <img src="images/puma.png" alt="Puma" class="logo-img">
                <img src="images/ganesh.png" alt="Shree Ganesh" class="logo-img">
@@ -396,7 +402,7 @@
                 <img src="images/lifepoint.jpg" alt="LifePoint" class="logo-img">
                 <img src="images/hyt.png" alt="HytEngineering" class="logo-img">
                 <img src="images/mekins.png" alt="Mekins" class="logo-img">
-                <img src="images/ksh.jpg" alt="KSH" class="logo-img">
+                <img src="images/KSH.jpg" alt="KSH" class="logo-img">
                 <img src="images/nike.png" alt="Nike" class="logo-img">
                <img src="images/puma.png" alt="Puma" class="logo-img">
                <img src="images/ganesh.png" alt="Shree Ganesh" class="logo-img">
@@ -454,6 +460,7 @@
                     <li><a href="about.html">About Us</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="projects.html">Projects</a></li>
+                    <li><a href="clients.html">Clients</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
@@ -469,14 +476,14 @@
             <div class="footer-col">
                 <h4>Contact Us</h4>
                 <ul>
-                    <li>📍 123, Industrial Area, Navi Mumbai, Maharashtra - 400701</li>
-                    <li>📞 +91 98765 43210</li>
+                    <li>📍 Office No 11, Ram Radha Appartment, B Building, Dange Chowk, Near Spandan Hospital, Near Sagar Medical, Near Maheri Hospital, Wakad Road, Chinchwad, Pune-411035, Maharashtra</li>
+                    <li>📞 +91 7947120803</li>
                     <li>✉️ info@blueskyacservices.com</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 BLUESKY AC SERVICES. All Rights Reserved. | Privacy Policy | Terms & Conditions</p>
+            <p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved. | Privacy Policy | Terms & Conditions</p>
         </div>
     </footer>
 
@@ -507,8 +514,22 @@
         var certImg = document.getElementById("certImg");
         var closeCertBtn = document.querySelector(".close-modal");
 
-        certImg.onclick = function(){ certModal.style.display = "flex"; }
-        closeCertBtn.onclick = function() { certModal.style.display = "none"; }
+        // Open modal
+        certImg.addEventListener('click', function() {
+            certModal.style.display = "flex";
+        });
+
+        // Close modal on X click
+        closeCertBtn.addEventListener('click', function() {
+            certModal.style.display = "none";
+        });
+
+        // Close modal on clicking the dark background
+        certModal.addEventListener('click', function(event) {
+            if (event.target === certModal) {
+                certModal.style.display = "none";
+            }
+        });
         
         // --- 3. PRODUCTS LIGHTBOX POP-UP LOGIC ---
         const lightbox = document.getElementById("imageLightbox");
