@@ -4,239 +4,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bluesky AC Services | HVAC & Industrial Cooling Solutions</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS RESET & VARIABLES */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary-blue: #0056b3;
-            --accent-blue: #00a8ff;
-            --dark-navy: #0a192f;
-            --light-bg: #f4f7f6;
-            --white: #ffffff;
-            --text-dark: #333333;
-            --text-light: #666666;
-            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* --- NEW GALLERY SECTION STYLES --- */
+        .gallery-section {
+            padding: 80px 20px; /* Reduced padding */
+            background-color: var(--white);
+            text-align: center;
         }
-        body { font-family: var(--font-main); line-height: 1.6; color: var(--text-dark); background-color: var(--white); }
-
-        /* NAVIGATION */
-        header {
-            background: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky; top: 0; z-index: 1000;
-        }
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            max-width: 1200px; margin: 0 auto; padding: 15px 20px;
-        }
-        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon { width: 45px; height: 45px; fill: none; stroke: var(--primary-blue); stroke-width: 8; stroke-linecap: round; }
-        .logo-icon path:nth-child(2) { stroke: var(--accent-blue); }
-        .logo-text { font-size: 24px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; }
-        .logo-text span { color: var(--accent-blue); }
-
-        .nav-links { display: flex; list-style: none; gap: 30px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
-        .btn-quote { background:#ff8c00; color: var(--white)!important; padding: 10px 25px; border-radius: 5px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
-        .btn-quote:hover { background: var(--accent-blue); }
-
-        /* --- HAMBURGER MENU STYLES --- */
-        .menu-toggle {
-            display: none; 
-            font-size: 30px;
-            color: var(--primary-blue);
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        /* HERO SECTION */
-        .hero {
-            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-            height: 75vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white); padding: 0 20px;
-        }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; max-width: 900px; }
-        .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 700px; }
-        .hero-buttons { display: flex; gap: 20px; }
-        .btn-primary { background: var(--accent-blue); color: var(--white); padding: 15px 35px; text-decoration: none; border-radius: 5px; font-weight: 700; transition: transform 0.3s; }
-        .btn-secondary { background: transparent; color: var(--white); padding: 15px 35px; text-decoration: none; border-radius: 5px; font-weight: 700; border: 2px solid var(--white); transition: all 0.3s; }
-        .btn-primary:hover { transform: translateY(-3px); background: #0097e6; }
-        .btn-secondary:hover { background: var(--white); color: var(--dark-navy); }
-
-        /* STATS SECTION */
-        .stats-container {
-            max-width: 1200px;
-            margin: -50px auto 40px; 
-            padding: 0 20px;
+        
+        .gallery-container {
+            max-width: 1100px; /* Reduced max width */
+            margin: 0 auto;
             position: relative;
-            z-index: 10;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            height: 450px; /* Reduced height */
         }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-        .stat-card {
-            background: var(--white); border-radius: 10px; padding: 30px 20px; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-bottom: 4px solid var(--primary-blue); transition: transform 0.3s;
-        }
-        .stat-card:hover { transform: translateY(-5px); }
-        .stat-icon { width: 40px; height: 40px; margin: 0 auto 10px auto; display: block; color: var(--primary-blue); }
-        .stat-card h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 5px; font-weight: 800; }
-        .stat-card p { color: var(--dark-navy); font-weight: 600; font-size: 1rem; }
 
-        /* REWARDS / CERTIFICATION SECTION */
-        .cert-section {
-            background-color: var(--primary-blue); 
-            padding: 50px 20px;
+        @media (max-width: 768px) {
+            .gallery-container { height: 250px; }
+        }
+
+        .gallery-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Faster, snappier slide */
+        }
+
+        .gallery-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            cursor: pointer; /* Shows pointer to indicate clickable */
+        }
+
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-slide:hover img {
+            transform: scale(1.03); /* Subtle zoom on hover */
+        }
+
+        /* Dark overlay on images so text pops */
+        .gallery-slide::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60%;
+            background: linear-gradient(transparent, rgba(10, 25, 47, 0.95));
+            pointer-events: none;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 40px;
             color: var(--white);
-        }
-        .cert-container {
-            max-width: 1000px; margin: 0 auto;
-            display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap;
-        }
-        .cert-image {
-            width: 140px; height: auto; border: 3px solid var(--white); border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            background: var(--white); cursor: pointer; transition: transform 0.3s;
-        }
-        .cert-image:hover { transform: scale(1.05); }
-        .cert-text h3 { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; font-weight: 600; }
-        .cert-text h2 { font-size: 2.2rem; margin-bottom: 10px; font-weight: 800; line-height: 1.2; }
-        .cert-text p { font-size: 1.1rem; opacity: 0.95; max-width: 600px; }
-
-        /* SERVICES SECTION */
-        .services { padding: 80px 20px; max-width: 1200px; margin: 0 auto; background: var(--white); }
-        .section-title { text-align: center; margin-bottom: 50px; }
-        .section-title h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 10px; }
-        .section-title p { color: var(--text-light); }
-        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .service-card {
-            background: var(--white); border-radius: 10px; overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid #eee;
-        }
-        .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
-        .service-img { width: 100%; height: 200px; object-fit: cover; }
-        .service-content { padding: 25px; }
-        .service-content h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--dark-navy); }
-        .service-content p { color: var(--text-light); font-size: 0.95rem; }
-        .service-link { display: inline-block; margin-top: 15px; color: var(--primary-blue); text-decoration: none; font-weight: 600; }
-        .service-link:hover { text-decoration: underline; }
-
-        /* SCROLLING LOGOS SECTION */
-        .logos-section { padding: 60px 0; background: var(--light-bg); overflow: hidden; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea;}
-        .logos-section h2 { text-align: center; color: var(--primary-blue); font-size: 1.6rem; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px;}
-        
-        .marquee-container {
-            display: flex; overflow: hidden; user-select: none; gap: 40px;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        }
-        
-        .marquee-content {
-            flex-shrink: 0; display: flex; align-items: center; justify-content: space-around;
-            gap: 40px; min-width: 100%; animation: scroll 50s linear infinite;
-        }
-        .marquee-content.reverse { animation-direction: reverse; animation-duration: 35s; }
-
-        @keyframes scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(calc(-100% - 40px)); }
+            z-index: 2;
+            text-align: left;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s ease 0.2s;
+            pointer-events: none;
         }
 
-        /* Real Logo Image Styling */
-        .logo-img {
-            height: 100px; /* Increased base size */
-            max-width: 220px;
-            min-width: 170px;
-            object-fit: contain;
-            background: var(--white);
-            padding: 15px 20px;
+        .gallery-slide.active .gallery-caption {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-caption h3 { font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+        .gallery-caption p { font-size: 1rem; color: #e2e8f0; }
+
+        /* Dots Navigation */
+        .gallery-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 3;
+        }
+
+        .g-dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .g-dot.active {
+            background: var(--accent-orange);
+            transform: scale(1.4);
+            box-shadow: 0 0 10px var(--accent-orange);
+        }
+
+        /* --- LIGHTBOX MODAL STYLES --- */
+        .gallery-lightbox {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(6, 15, 30, 0.95);
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-lightbox.show {
+            display: flex;
+            opacity: 1;
+        }
+        .gallery-lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
             border-radius: 10px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            will-change: transform;
-            display: block;
-        }
-
-        .logo-img:hover {
-            transform: scale(1.15);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.15);
-        }
-
-        /* --- MODAL & LIGHTBOX STYLES --- */
-        .modal, .lightbox {
-            display: none; position: fixed; z-index: 9999; left: 0; top: 0;
-            width: 100%; height: 100%; background-color: rgba(10, 25, 47, 0.95);
-            backdrop-filter: blur(5px); align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease; flex-direction: column;
-        }
-        .modal.show, .lightbox.show { display: flex; opacity: 1; }
-        
-        .modal-content, .lightbox-content {
-            max-width: 90%; max-height: 85vh;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
-            border: 4px solid var(--white); border-radius: 8px;
-            transform: scale(0.8);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: scale(0.9);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            object-fit: contain; background: #000;
+            border: 4px solid var(--white);
         }
-        .modal.show .modal-content, .lightbox.show .lightbox-content {
+        .gallery-lightbox.show img {
             transform: scale(1);
         }
-
-        .close-modal, .close-lightbox {
-            position: absolute; top: 20px; right: 35px;
-            color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; line-height: 1;
+        .close-lightbox {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 45px;
+            cursor: pointer;
+            transition: 0.3s;
+            line-height: 1;
         }
-        .close-modal:hover, .close-lightbox:hover { color: var(--accent-blue); }
-
-        /* FOOTER */
-        footer { background: var(--dark-navy); color: var(--white); padding: 60px 20px 20px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
-        .footer-col h4 { margin-bottom: 20px; color: var(--accent-blue); }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 10px; color: #ccc; }
-        .footer-col ul li a { color: #ccc; text-decoration: none; transition: color 0.3s; }
-        .footer-col ul li a:hover { color: var(--white); }
-        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1c3a5e; color: #888; font-size: 0.9rem; }
-
-        /* --- RESPONSIVE / MOBILE STYLES --- */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .hero-buttons { flex-direction: column; }
-            .cert-container { flex-direction: column; text-align: center; }
-            .stats-container { margin-top: 20px; } 
-            
-            /* REMOVED the shrinking logo rule so they stay large on mobile */
-            .logo-img {
-                height: 80px; 
-                min-width: 140px;
-            }
-
-            .menu-toggle { display: block; }
-
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 75px;
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-                padding: 20px 0;
-                gap: 15px;
-                text-align: center;
-                z-index: 999;
-            }
-
-            .nav-links.active { display: flex; }
+        .close-lightbox:hover {
+            color: var(--accent-orange);
+            transform: rotate(90deg);
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
-        <nav>
+        <div class="nav-container">
             <a href="index.html" class="logo-container">
                 <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" />
@@ -245,138 +166,187 @@
                 </svg>
                 <div class="logo-text">BLUESKY <span>AC SERVICES</span></div>
             </a>
-            
             <div class="menu-toggle" id="mobile-menu">☰</div>
-
             <ul class="nav-links" id="nav-links-list">
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
-                <li><a href="services.html">Services</a></li>
+                <!-- Services Dropdown -->
+                <li class="dropdown">
+                    <a href="services.html">Services ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html">VRF System</a></li>
+                        <li><a href="services.html">AHU & Ducting</a></li>
+                        <li><a href="services.html">Chiller Plants</a></li>
+                        <li><a href="services.html">Central AC</a></li>
+                        <li><a href="services.html">Maintenance & AMC</a></li>
+                    </ul>
+                </li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="clients.html">Clients</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="contact.html" class="btn-quote">Get Quote</a></li> 
             </ul>
-        </nav>
+        </div>
     </header>
 
     <!-- HERO SECTION -->
-    <section class="hero">
-        <h1>Complete HVAC & Industrial Cooling Solutions</h1>
-        <p>Design • Installation • Maintenance • Service for Industrial & Commercial Cooling Systems Across India</p>
-        <div class="hero-buttons">
-            <a href="services.html" class="btn-primary">Our Services</a>
-            <a href="contact.html" class="btn-secondary">Contact Us</a>
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text-box reveal">
+                <h4>We are a Service Providing Company</h4>
+                <h1>Complete HVAC & Industrial Cooling Solutions</h1>
+                <p>Design • Installation • Maintenance • Service for Industrial & Commercial Cooling Systems Across India.</p>
+                <div class="hero-btns">
+                    <a href="services.html" class="btn-primary">Explore Services</a>
+                    <a href="contact.html" class="btn-secondary">Contact Us</a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- STATS SECTION -->
-    <section class="stats-container">
-        <div class="stats-grid">
-            <div class="stat-card">
+    <!-- FLOATING STATS -->
+    <div class="wix-stats-wrapper">
+        <div class="stats-box reveal">
+            <div class="stat-item">
                 <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 <h2>25+</h2>
                 <p>Years of Experience</p>
             </div>
-            <div class="stat-card">
-                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line><line x1="12" y1="22" x2="12" y2="22.01"></line><path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"></path></svg>
+            <div class="stat-item">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                 <h2>500+</h2>
                 <p>Projects Completed</p>
             </div>
-            <div class="stat-card">
+            <div class="stat-item">
                 <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 <h2>120+</h2>
                 <p>Satisfied Clients</p>
             </div>
-            <div class="stat-card">
+            <div class="stat-item">
                 <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 <h2>24/7</h2>
                 <p>Service Support</p>
             </div>
         </div>
-    </section>
-
-    <!-- REWARDS / CERTIFICATION SECTION -->
-    <section class="cert-section">
-        <div class="cert-container">
-            <img src="images/award_certificate.png" alt="Certificate" class="cert-image" id="certImg" style="padding: 10px;">
-            <div class="cert-text">
-                <h3>CERTIFICATION & REWARDS</h3>
-                <h2>Preferred Supplier & Excellence Award</h2>
-                <p>Recognized for excellence in Products & Service Performance, Process control, and commitment to customer satisfaction.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- MODAL POPUP FOR CERTIFICATE -->
-    <div id="certModal" class="modal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImg" src="images/award_certificate.png" alt="Enlarged Certificate">
     </div>
 
-    <!-- SERVICES SECTION -->
-    <section class="services">
-        <div class="section-title">
-            <h2>Our Services</h2>
-            <p>Comprehensive HVAC solutions tailored for industrial and commercial needs</p>
+    <!-- SERVICES PREVIEW -->
+    <section class="section bg-light">
+        <div class="section-header reveal">
+            <h4>What We Do</h4>
+            <h2>Our Core Services</h2>
         </div>
-        <div class="service-grid">
-            <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="VRF System" class="service-img">
-                <div class="service-content">
+        <div class="grid-container">
+            <div class="service-card reveal">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="VRF System">
+                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                </div>
+                <div class="card-content">
                     <h3>VRF System</h3>
                     <p>Energy efficient VRF cooling solutions for offices & buildings.</p>
-                    <a href="services.html" class="service-link">Learn More →</a>
+                    <a href="services.html" class="service-btn">Read More →</a>
                 </div>
             </div>
-            <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="AHU System" class="service-img">
-                <div class="service-content">
+            <div class="service-card reveal" style="transition-delay: 0.1s;">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="AHU System">
+                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+                </div>
+                <div class="card-content">
                     <h3>AHU System</h3>
                     <p>Custom AHU installation and ducting for optimal airflow.</p>
-                    <a href="services.html" class="service-link">Learn More →</a>
+                    <a href="services.html" class="service-btn">Read More →</a>
                 </div>
             </div>
-            <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chiller Plants" class="service-img">
-                <div class="service-content">
+            <div class="service-card reveal" style="transition-delay: 0.2s;">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chiller Plants">
+                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+                </div>
+                <div class="card-content">
                     <h3>Chiller Plants</h3>
                     <p>Industrial chiller plants for manufacturing & facilities.</p>
-                    <a href="services.html" class="service-link">Learn More →</a>
+                    <a href="services.html" class="service-btn">Read More →</a>
                 </div>
             </div>
-            <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Central AC" class="service-img">
-                <div class="service-content">
-                    <h3>Central AC Systems</h3>
-                    <p>Complete centralized AC systems for commercial spaces.</p>
-                    <a href="services.html" class="service-link">Learn More →</a>
-                </div>
-            </div>
-            <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maintenance" class="service-img">
-                <div class="service-content">
-                    <h3>Maintenance Services</h3>
-                    <p>24/7 preventive maintenance & troubleshooting support.</p>
-                    <a href="services.html" class="service-link">Learn More →</a>
-                </div>
-            </div>
-            
-            <!-- Products Card (Now Clickable) -->
-            <div class="service-card" onclick="openLightbox('images/products-bluesky.png')" style="cursor: pointer;">
-                <img src="images/product.jpeg" alt="Our Products" class="service-img">
-                <div class="service-content">
-                    <h3>Our Products</h3>
-                    <p>High-quality HVAC equipment for residential and commercial use. Click to view catalogue.</p>
-                </div>
-            </div>
-
         </div>
     </section>
 
-    <!-- SCROLLING LOGOS SECTION (Clients) -->
+    <!-- DARK CERTIFICATE SECTION -->
+    <section class="cert-section">
+        <div class="cert-container reveal">
+            <div class="cert-image-wrapper">
+                <img src="images/award_certificate.png" alt="Certificate" class="cert-image" id="certImg">
+            </div>
+            <div class="cert-text">
+                <h3>Certification & Rewards</h3>
+                <h2>Preferred Supplier & Excellence Award</h2>
+                <p>Recognized for outstanding excellence in Products & Service Performance, Process control, and our unwavering commitment to customer satisfaction.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- AUTO-WIPING GALLERY SECTION --- -->
+    <section class="gallery-section bg-light">
+        <div class="section-header reveal" style="margin-bottom: 30px;">
+            <h4>Our Work in Action</h4>
+            <h2>Project Gallery</h2>
+        </div>
+        
+        <div class="gallery-container reveal">
+            <div class="gallery-track" id="galleryTrack">
+                
+                <!-- Slide 1 -->
+                <div class="gallery-slide active" onclick="openGalleryLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Industrial Setup">
+                    <div class="gallery-caption">
+                        <h3>Industrial HVAC Installation</h3>
+                        <p>Large-scale cooling solutions for manufacturing plants.</p>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="gallery-slide" onclick="openGalleryLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Chiller Plant">
+                    <div class="gallery-caption">
+                        <h3>1000 TR Chiller Plant</h3>
+                        <p>Precision cooling for heavy machinery and processes.</p>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="gallery-slide" onclick="openGalleryLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="VRF System">
+                    <div class="gallery-caption">
+                        <h3>Commercial VRF Systems</h3>
+                        <p>Energy-efficient climate control for corporate spaces.</p>
+                    </div>
+                </div>
+                <!-- Slide 4 (Updated Image) -->
+                <div class="gallery-slide" onclick="openGalleryLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Technician Maintenance">
+                    <div class="gallery-caption">
+                        <h3>Expert Maintenance & AMC</h3>
+                        <p>Preventive care and rapid troubleshooting for all systems.</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Navigation Dots -->
+            <div class="gallery-dots" id="galleryDots">
+                <div class="g-dot active" onclick="goToGallerySlide(0)"></div>
+                <div class="g-dot" onclick="goToGallerySlide(1)"></div>
+                <div class="g-dot" onclick="goToGallerySlide(2)"></div>
+                <div class="g-dot" onclick="goToGallerySlide(3)"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCROLLING LOGOS (Clients) -->
     <section class="logos-section">
-        <h2>Our Esteemed Clients</h2>
+        <h2>Trusted by Industry Leaders</h2>
         <div class="marquee-container">
             <div class="marquee-content">
                 <img src="images/lupin_logo.png" alt="Lupin" class="logo-img">
@@ -390,10 +360,10 @@
                 <img src="images/mekins.png" alt="Mekins" class="logo-img">
                 <img src="images/KSH.jpg" alt="KSH" class="logo-img">
                 <img src="images/nike.png" alt="Nike" class="logo-img">
-               <img src="images/puma.png" alt="Puma" class="logo-img">
-               <img src="images/ganesh.png" alt="Shree Ganesh" class="logo-img">
-               <img src="images/isa-spa.jpeg" alt="ISA Spa" class="logo-img">
-               <img src="images/lupin_logo.png" alt="Lupin" class="logo-img">
+                <img src="images/puma.png" alt="Puma" class="logo-img">
+            </div>
+            <div class="marquee-content">
+                <img src="images/lupin_logo.png" alt="Lupin" class="logo-img">
                 <img src="images/fabtech_logo.png" alt="Fabtech" class="logo-img">
                 <img src="images/emerson.png" alt="Emerson" class="logo-img">
                 <img src="images/logo.png" alt="Yessworks" class="logo-img">
@@ -404,54 +374,30 @@
                 <img src="images/mekins.png" alt="Mekins" class="logo-img">
                 <img src="images/KSH.jpg" alt="KSH" class="logo-img">
                 <img src="images/nike.png" alt="Nike" class="logo-img">
-               <img src="images/puma.png" alt="Puma" class="logo-img">
-               <img src="images/ganesh.png" alt="Shree Ganesh" class="logo-img">
-               <img src="images/pepe_jeans.png" alt="PapeJeans" class="logo-img">
-               <img src="images/isa-spa.jpeg" alt="ISA Spa" class="logo-img">
+                <img src="images/puma.png" alt="Puma" class="logo-img">
             </div>
         </div>
     </section>
 
-    <!-- SCROLLING LOGOS SECTION (Partners) -->
-    <section class="logos-section" style="background: var(--white);">
-        <h2>Dealing & Work With</h2>
-        <div class="marquee-container">
-            <div class="marquee-content reverse">
-                <img src="images/Blue_Star.png" alt="Blue Star" class="logo-img">
-                <img src="images/Daikin.png" alt="Daikin" class="logo-img">
-                <img src="images/LG.png" alt="LG" class="logo-img">
-                <img src="images/Voltas.png" alt="Voltas" class="logo-img">
-                <img src="images/Onida.png" alt="Onida" class="logo-img">
-                <img src="images/Hitachi-logo.jpg" alt="Hitachi" class="logo-img">
-                <img src="images/O'General.png" alt="O'General" class="logo-img">
-                <img src="images/Panasonic.png" alt="Panasonic" class="logo-img">
-                <img src="images/Samsung.png" alt="Samsung" class="logo-img">
-                <img src="images/Carrier.png" alt="Carrier" class="logo-img">
-                <img src="images/Mitsubishi.png" alt="Mitsubishi" class="logo-img">
-            </div>
-            <!-- Duplicated for seamless infinite scroll -->
-            <div class="marquee-content reverse">
-                <img src="images/Blue_Star.png" alt="Blue Star" class="logo-img">
-                <img src="images/Daikin.png" alt="Daikin" class="logo-img">
-                <img src="images/LG.png" alt="LG" class="logo-img">
-                <img src="images/Voltas.png" alt="Voltas" class="logo-img">
-                <img src="images/Onida.png" alt="Onida" class="logo-img">
-                <img src="images/Hitachi-logo.jpg" alt="Hitachi" class="logo-img">
-                <img src="images/O'General.png" alt="O'General" class="logo-img">
-                <img src="images/Panasonic.png" alt="Panasonic" class="logo-img">
-                <img src="images/Samsung.png" alt="Samsung" class="logo-img">
-                <img src="images/Carrier.png" alt="Carrier" class="logo-img">
-                <img src="images/Mitsubishi.png" alt="Mitsubishi" class="logo-img">
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
+    <!-- FOOTER WITH SOCIAL ICONS -->
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
                 <h4>BLUESKY AC SERVICES</h4>
-                <p>Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+                <p style="color:#94a3b8; margin-bottom: 20px;">Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+                
+                <!-- Social Media Icons -->
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="#" aria-label="WhatsApp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </div>
             </div>
             <div class="footer-col">
                 <h4>Quick Links</h4>
@@ -460,117 +406,142 @@
                     <li><a href="about.html">About Us</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="projects.html">Projects</a></li>
-                    <li><a href="clients.html">Clients</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Our Services</h4>
+                <h4>Services</h4>
                 <ul>
-                    <li>VRF System</li>
-                    <li>Chiller Plants</li>
-                    <li>Central AC</li>
-                    <li>Maintenance Services</li>
+                    <li><a href="services.html">VRF System</a></li>
+                    <li><a href="services.html">AHU & Ducting</a></li>
+                    <li><a href="services.html">Chiller Plants</a></li>
+                    <li><a href="services.html">Central AC</a></li>
+                    <li><a href="services.html">Maintenance & AMC</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Contact Us</h4>
                 <ul>
-                    <li>📍 Office No 11, Ram Radha Appartment, B Building, Dange Chowk, Near Spandan Hospital, Near Sagar Medical, Near Maheri Hospital, Wakad Road, Chinchwad, Pune-411035, Maharashtra</li>
+                    <li>📍 Office No 11, Ram Radha Appartment, Dange Chowk, Chinchwad, Pune-411035</li>
                     <li>📞 +91 7947120803</li>
                     <li>✉️ info@blueskyacservices.com</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved. | Privacy Policy | Terms & Conditions</p>
+            <p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- LIGHTBOX HTML STRUCTURE FOR PRODUCTS -->
-    <div id="imageLightbox" class="lightbox">
-        <span class="close-lightbox">&times;</span>
-        <img class="lightbox-content" id="lightboxImg" src="" alt="Product Image">
+    <!-- CERTIFICATE MODAL -->
+    <div id="certModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg" src="images/award_certificate.png" alt="Enlarged Certificate">
     </div>
 
-    <!-- JAVASCRIPT FOR MENU, CERTIFICATE, AND PRODUCT LIGHTBOX -->
+    <!-- GALLERY LIGHTBOX MODAL -->
+    <div id="galleryLightbox" class="gallery-lightbox">
+        <span class="close-lightbox" onclick="closeGalleryLightbox()">&times;</span>
+        <img id="lightboxImage" src="" alt="Gallery Image">
+    </div>
+
+    <!-- JAVASCRIPT -->
     <script>
-        // --- 1. MOBILE MENU TOGGLE LOGIC ---
+        // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobile-menu');
         const navLinksList = document.getElementById('nav-links-list');
-
         mobileMenuBtn.addEventListener('click', function() {
             navLinksList.classList.toggle('active');
-            
-            if(navLinksList.classList.contains('active')){
-                mobileMenuBtn.innerHTML = '✕';
-            } else {
-                mobileMenuBtn.innerHTML = '☰';
-            }
+            mobileMenuBtn.innerHTML = navLinksList.classList.contains('active') ? '✕' : '☰';
         });
 
-        // --- 2. CERTIFICATE POPUP LOGIC ---
+        // Certificate Modal
         var certModal = document.getElementById("certModal");
         var certImg = document.getElementById("certImg");
         var closeCertBtn = document.querySelector(".close-modal");
+        certImg.onclick = function() { certModal.style.display = "flex"; }
+        closeCertBtn.onclick = function() { certModal.style.display = "none"; }
+        certModal.onclick = function(e) { if (e.target === certModal) certModal.style.display = "none"; }
 
-        // Open modal
-        certImg.addEventListener('click', function() {
-            certModal.style.display = "flex";
+        // Scroll Animation Observer
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            reveals.forEach(reveal => { observer.observe(reveal); });
         });
 
-        // Close modal on X click
-        closeCertBtn.addEventListener('click', function() {
-            certModal.style.display = "none";
-        });
+        // --- AUTO WIPING GALLERY LOGIC ---
+        const galleryTrack = document.getElementById('galleryTrack');
+        const gDots = document.querySelectorAll('.g-dot');
+        const slides = document.querySelectorAll('.gallery-slide');
+        let currentGalleryIndex = 0;
+        let galleryInterval;
 
-        // Close modal on clicking the dark background
-        certModal.addEventListener('click', function(event) {
-            if (event.target === certModal) {
-                certModal.style.display = "none";
-            }
-        });
-        
-        // --- 3. PRODUCTS LIGHTBOX POP-UP LOGIC ---
-        const lightbox = document.getElementById("imageLightbox");
-        const lightboxImg = document.getElementById("lightboxImg");
-        const closeLightboxBtn = document.querySelector(".close-lightbox");
+        function goToGallerySlide(index) {
+            currentGalleryIndex = index;
+            // Faster transform animation (0.4s)
+            galleryTrack.style.transform = `translateX(-${currentGalleryIndex * 100}%)`;
+            
+            gDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentGalleryIndex);
+            });
 
-        function openLightbox(imageSrc) {
-            lightboxImg.src = imageSrc;         
-            lightbox.classList.add("show");     
-            document.body.style.overflow = "hidden"; 
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentGalleryIndex);
+            });
         }
 
-        function closeLightbox() {
-            lightbox.classList.remove("show");
-            document.body.style.overflow = "auto"; 
-            setTimeout(() => { lightboxImg.src = ""; }, 300); 
+        function startGalleryAutoPlay() {
+            galleryInterval = setInterval(() => {
+                let nextIndex = (currentGalleryIndex + 1) % slides.length;
+                goToGallerySlide(nextIndex);
+            }, 2500); // Faster autoplay (every 2.5 seconds)
         }
 
-        closeLightboxBtn.addEventListener("click", closeLightbox);
+        startGalleryAutoPlay();
 
-        lightbox.addEventListener("click", function(e) {
-            if (e.target === lightbox) {
-                closeLightbox();
+        const galleryContainer = document.querySelector('.gallery-container');
+        galleryContainer.addEventListener('mouseenter', () => clearInterval(galleryInterval));
+        galleryContainer.addEventListener('mouseleave', startGalleryAutoPlay);
+
+        // --- GALLERY LIGHTBOX LOGIC ---
+        const galleryLightbox = document.getElementById('galleryLightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+
+        function openGalleryLightbox(element) {
+            // Get the image source from the clicked slide
+            const imgSrc = element.querySelector('img').src;
+            lightboxImage.src = imgSrc;
+            galleryLightbox.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+        }
+
+        function closeGalleryLightbox() {
+            galleryLightbox.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => { lightboxImage.src = ''; }, 300);
+        }
+
+        // Close Lightbox when clicking outside the image
+        galleryLightbox.addEventListener('click', function(e) {
+            if (e.target === galleryLightbox) {
+                closeGalleryLightbox();
             }
         });
 
-        // Close either modal on Escape key
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape") {
-                if (lightbox.classList.contains("show")) closeLightbox();
-                if (certModal.style.display === "flex") certModal.style.display = "none";
+        // Close Lightbox with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && galleryLightbox.classList.contains('show')) {
+                closeGalleryLightbox();
             }
         });
-
-        // Global window click to close cert modal
-        window.onclick = function(event) { 
-            if (event.target == certModal) { 
-                certModal.style.display = "none"; 
-            } 
-        }
     </script>
-
 </body>
 </html>

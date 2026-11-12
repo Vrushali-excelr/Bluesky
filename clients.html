@@ -4,230 +4,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Clients & Partners | Bluesky AC Services</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS RESET & VARIABLES */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary-blue: #0056b3;
-            --accent-blue: #00a8ff;
-            --dark-navy: #0a192f;
-            --light-bg: #f4f7f6;
-            --white: #ffffff;
-            --text-dark: #333333;
-            --text-light: #666666;
-            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* Page Hero */
+        .page-hero { 
+            position: relative; 
+            height: 40vh; 
+            min-height: 300px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            background: url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; 
         }
-        body { font-family: var(--font-main); line-height: 1.6; color: var(--text-dark); background-color: var(--white); }
-
-        /* NAVIGATION */
-        header {
-            background: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky; top: 0; z-index: 1000;
+        .page-hero-overlay { 
+            position: absolute; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.95)); 
         }
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            max-width: 1200px; margin: 0 auto; padding: 15px 20px;
+        .page-hero h1 { 
+            position: relative; 
+            z-index: 1; 
+            color: var(--white); 
+            font-size: 4rem; 
+            font-weight: 900; 
+            letter-spacing: -1px;
         }
-        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon { width: 45px; height: 45px; fill: none; stroke: var(--primary-blue); stroke-width: 8; stroke-linecap: round; }
-        .logo-icon path:nth-child(2) { stroke: var(--accent-blue); }
-        .logo-text { font-size: 24px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; }
-        .logo-text span { color: var(--accent-blue); }
 
-        .nav-links { display: flex; list-style: none; gap: 30px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
-        .btn-quote { background: #ff8c00; color: var(--white) !important; padding: 10px 25px; border-radius: 5px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
-        .btn-quote:hover { background: var(--accent-blue); }
-
-        /* HAMBURGER MENU */
-        .menu-toggle { display: none; font-size: 30px; color: var(--primary-blue); cursor: pointer; z-index: 1001; }
-
-        /* PAGE HEADER */
-        .page-header {
-            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-            padding: 100px 20px; text-align: center; color: var(--white);
-        }
-        .page-header h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 800; }
-        .page-header p { font-size: 1.2rem; color: #e0e0e0; max-width: 700px; margin: 0 auto; }
-
-        /* LOGOS SECTIONS */
-        .clients-section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
-        .section-title { text-align: center; margin-bottom: 50px; }
-        .section-title h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;}
-        .section-title p { color: var(--text-light); font-size: 1.1rem; }
-
-        /* Updated Grid and Cards for seamless look */
-        .logo-grid {
+        /* --- COMPACT MASONRY LOGO GRID --- */
+        .logo-wall {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            align-items: center;
-            justify-items: center;
+            /* Creates a dense grid where logos can span different sizes */
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-auto-rows: 120px; /* Base height for the smallest logos */
+            gap: 15px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        .logo-card {
-            /* Removed white background and padding to blend into the page */
-            background: transparent; 
-            border: none;
-            width: 100%;
-            height: 120px; 
+        .logo-item {
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.3s ease;
-            cursor: pointer;
+            background: transparent;
+            padding: 10px;
+            /* Removed cursor: pointer and hover scale to make it static */
+            transition: filter 0.3s ease;
         }
 
-        /* Simple hover effect: just a slight scale up */
-        .logo-card:hover {
-            transform: scale(1.1);
+        /* Hover effect: Just a slight glow, no cursor change */
+        .logo-item:hover {
+            filter: drop-shadow(0px 0px 10px rgba(255, 107, 0, 0.3));
         }
 
-        .logo-card img {
+        .logo-item img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            /* Added a soft drop shadow to make logos pop without a box */
-            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1)); 
+            /* Keeps original colors, adds shadow so they stand out on the grey */
+            filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.15));
         }
 
-        /* Separator Line */
-        .separator {
-            width: 100%;
-            height: 1px;
-            background: #eaeaea;
-            margin: 40px 0;
+        /* --- MASONRY SIZING MODIFIERS --- */
+        /* Some logos are large (span 2 columns, 2 rows) */
+        .logo-item.large {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        .logo-item.large img { max-height: 180px; }
+
+        /* Some logos are wide (span 2 columns) */
+        .logo-item.wide {
+            grid-column: span 2;
         }
 
-        /* FOOTER */
-        footer { background: var(--dark-navy); color: var(--white); padding: 60px 20px 20px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
-        .footer-col h4 { margin-bottom: 20px; color: var(--accent-blue); }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 10px; color: #ccc; }
-        .footer-col ul li a { color: #ccc; text-decoration: none; transition: color 0.3s; }
-        .footer-col ul li a:hover { color: var(--white); }
-        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1c3a5e; color: #888; font-size: 0.9rem; }
+        /* Some logos are tall (span 2 rows) */
+        .logo-item.tall {
+            grid-row: span 2;
+        }
 
-        /* --- RESPONSIVE / MOBILE STYLES --- */
+        /* Separator */
+        .separator { 
+            width: 100%; 
+            height: 1px; 
+            background: linear-gradient(to right, transparent, #cbd5e1, transparent); 
+            margin: 40px 0; 
+        }
+
+        /* Responsive Adjustments */
         @media (max-width: 768px) {
-            .page-header h1 { font-size: 2rem; }
-            
-            /* Make sure logos stay a good size on mobile */
-            .logo-grid { 
-                grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
-                gap: 20px; 
+            .page-hero h1 { font-size: 2.5rem; }
+            .logo-wall { 
+                grid-template-columns: repeat(3, 1fr); /* 3 columns on mobile */
+                grid-auto-rows: 80px; 
+                gap: 10px;
             }
-            .logo-card { 
-                height: 90px; 
+            .logo-item.large, .logo-item.wide {
+                grid-column: span 2;
             }
-
-            /* Mobile Menu Logic */
-            .menu-toggle { display: block; }
-
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 75px;
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-                padding: 20px 0;
-                gap: 15px;
-                text-align: center;
-                z-index: 999;
-            }
-
-            .nav-links.active { display: flex; }
+            .logo-item.large img { max-height: 100px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- HEADER -->
     <header>
-        <nav>
+        <div class="nav-container">
             <a href="index.html" class="logo-container">
-                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" />
-                    <path d="M15,55 Q45,30 75,55 T95,55" stroke-width="10" />
-                    <path d="M5,75 Q40,50 70,75 T95,75" stroke-width="10" />
-                </svg>
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" /><path d="M15,55 Q45,30 75,55 T95,55" stroke-width="10" /><path d="M5,75 Q40,50 70,75 T95,75" stroke-width="10" /></svg>
                 <div class="logo-text">BLUESKY <span>AC SERVICES</span></div>
             </a>
-            
             <div class="menu-toggle" id="mobile-menu">☰</div>
-
             <ul class="nav-links" id="nav-links-list">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
-                <li><a href="services.html">Services</a></li>
+                <li class="dropdown">
+                    <a href="services.html">Services ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html">VRF System</a></li>
+                        <li><a href="services.html">AHU & Ducting</a></li>
+                        <li><a href="services.html">Chiller Plants</a></li>
+                        <li><a href="services.html">Central AC</a></li>
+                        <li><a href="services.html">Maintenance & AMC</a></li>
+                    </ul>
+                </li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="clients.html" class="active">Clients</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="contact.html" class="btn-quote">Get Quote</a></li> 
+                <li><a href="contact.html" class="btn-quote">Get Quote</a></li>
             </ul>
-        </nav>
+        </div>
     </header>
 
-    <!-- PAGE HEADER -->
-    <section class="page-header">
+    <!-- HERO -->
+    <section class="page-hero">
+        <div class="page-hero-overlay"></div>
         <h1>Our Clients & Partners</h1>
-        <p>Trusted by leading companies across industries and dealing with top HVAC brands in India.</p>
     </section>
 
-    <!-- ESTEEMED CLIENTS SECTION -->
-    <section class="clients-section">
-        <div class="section-title">
+    <!-- ESTEEMED CLIENTS (Compact Masonry) -->
+    <section class="bg-light" style="padding: 40px 0;">
+        <div class="section-header reveal" style="text-align: center; margin-bottom: 20px;">
+            <h4>Trusted By</h4>
             <h2>Our Esteemed Clients</h2>
-            <p>We are proud to have served these reputed organizations.</p>
         </div>
         
-        <div class="logo-grid">
-            <div class="logo-card"><img src="images/lupin_logo.png" alt="Lupin Pharmaceuticals"></div>
-            <div class="logo-card"><img src="images/fabtech_logo.png" alt="Fabtech Projects"></div>
-            <div class="logo-card"><img src="images/emerson.png" alt="Emerson"></div>
-            <div class="logo-card"><img src="images/logo.png" alt="YesssWorks"></div>
-            <div class="logo-card"><img src="images/bal_ganesh.png" alt="Shri Bal Ganesh Developers"></div>
-            <div class="logo-card"><img src="images/pavilion.png" alt="Pavilion Data"></div>
-            <div class="logo-card"><img src="images/lifepoint.jpg" alt="Lifepoint Hospital"></div>
-            <div class="logo-card"><img src="images/hyt.png" alt="HYT Engineering"></div>
-            <div class="logo-card"><img src="images/mekins.png" alt="Mekins Storage"></div>
-            <div class="logo-card"><img src="images/ksh.jpg" alt="KSH Logistics"></div>
-            <div class="logo-card"><img src="images/nike.png" alt="Nike"></div>
-            <div class="logo-card"><img src="images/puma.png" alt="Puma"></div>
-            <div class="logo-card"><img src="images/ganesh.png" alt="Shree Ganesh Engineering"></div>
-            <div class="logo-card"><img src="images/pepe_jeans.png" alt="Pepe Jeans"></div>
-            <div class="logo-card"><img src="images/isa-spa.jpeg" alt="ISA Spa"></div>
+        <div class="logo-wall">
+            <!-- Assigning different classes to create the masonry overlap effect -->
+            <div class="logo-item large reveal"><img src="images/lupin_logo.png" alt="Lupin"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.05s;"><img src="images/fabtech_logo.png" alt="Fabtech"></div>
+            <div class="logo-item wide reveal" style="transition-delay: 0.1s;"><img src="images/emerson.png" alt="Emerson"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.15s;"><img src="images/logo.png" alt="YesssWorks"></div>
+            <div class="logo-item tall reveal" style="transition-delay: 0.2s;"><img src="images/bal_ganesh.png" alt="Bal Ganesh"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.25s;"><img src="images/pavilion.png" alt="Pavilion"></div>
+            <div class="logo-item wide reveal" style="transition-delay: 0.3s;"><img src="images/lifepoint.jpg" alt="Lifepoint"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.35s;"><img src="images/hyt.png" alt="HYT"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.4s;"><img src="images/mekins.png" alt="Mekins"></div>
+            <div class="logo-item large reveal" style="transition-delay: 0.45s;"><img src="images/nike.png" alt="Nike"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.5s;"><img src="images/ksh.jpg" alt="KSH"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.55s;"><img src="images/ganesh.png" alt="Shree Ganesh"></div>
+            <div class="logo-item wide reveal" style="transition-delay: 0.6s;"><img src="images/puma.png" alt="Puma"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.65s;"><img src="images/pepe_jeans.png" alt="Pepe Jeans"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.7s;"><img src="images/isa-spa.jpeg" alt="ISA Spa"></div>
         </div>
     </section>
 
-    <!-- SEPARATOR LINE -->
     <div class="separator"></div>
 
-    <!-- PARTNERS / DEALING WITH SECTION -->
-    <section class="clients-section" style="padding-top: 0;">
-        <div class="section-title">
+    <!-- PARTNERS (Compact Masonry) -->
+    <section style="padding: 40px 0;">
+        <div class="section-header reveal" style="text-align: center; margin-bottom: 20px;">
+            <h4>Authorized Dealers</h4>
             <h2>Dealing & Work With</h2>
-            <p>Authorized dealers and trusted partners for top HVAC brands.</p>
         </div>
         
-        <div class="logo-grid">
-            <div class="logo-card"><img src="images/Blue_Star.png" alt="Blue Star"></div>
-            <div class="logo-card"><img src="images/Daikin.png" alt="Daikin"></div>
-            <div class="logo-card"><img src="images/LG.png" alt="LG"></div>
-            <div class="logo-card"><img src="images/Voltas.png" alt="Voltas"></div>
-            <div class="logo-card"><img src="images/Onida.png" alt="Onida"></div>
-            <div class="logo-card"><img src="images/Hitachi-logo.jpg" alt="Hitachi"></div>
-            <div class="logo-card"><img src="images/O'General.png" alt="O'General"></div>
-            <div class="logo-card"><img src="images/Panasonic.png" alt="Panasonic"></div>
-            <div class="logo-card"><img src="images/Samsung.png" alt="Samsung"></div>
-            <div class="logo-card"><img src="images/Carrier.png" alt="Carrier"></div>
-            <div class="logo-card"><img src="images/Mitsubishi.png" alt="Mitsubishi"></div>
+        <div class="logo-wall">
+            <div class="logo-item wide reveal"><img src="images/Blue_Star.png" alt="Blue Star"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.05s;"><img src="images/Daikin.png" alt="Daikin"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.1s;"><img src="images/LG.png" alt="LG"></div>
+            <div class="logo-item large reveal" style="transition-delay: 0.15s;"><img src="images/Voltas.png" alt="Voltas"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.2s;"><img src="images/Onida.png" alt="Onida"></div>
+            <div class="logo-item wide reveal" style="transition-delay: 0.25s;"><img src="images/Hitachi-logo.jpg" alt="Hitachi"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.3s;"><img src="images/O'General.png" alt="O'General"></div>
+            <div class="logo-item tall reveal" style="transition-delay: 0.35s;"><img src="images/Panasonic.png" alt="Panasonic"></div>
+            <div class="logo-item wide reveal" style="transition-delay: 0.4s;"><img src="images/Samsung.png" alt="Samsung"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.45s;"><img src="images/Carrier.png" alt="Carrier"></div>
+            <div class="logo-item reveal" style="transition-delay: 0.5s;"><img src="images/Mitsubishi.png" alt="Mitsubishi"></div>
         </div>
     </section>
 
@@ -236,7 +199,12 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <h4>BLUESKY AC SERVICES</h4>
-                <p>Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+                <p style="color:#94a3b8; margin-bottom: 20px;">Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                    <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                </div>
             </div>
             <div class="footer-col">
                 <h4>Quick Links</h4>
@@ -245,39 +213,46 @@
                     <li><a href="about.html">About Us</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="projects.html">Projects</a></li>
-                    <li><a href="clients.html">Clients</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Contact Us</h4>
                 <ul>
-                                        <li>📍 Office No 11, Ram Radha Appartment, B Building, Dange Chowk, Near Spandan Hospital, Near Sagar Medical, Near Maheri Hospital, Wakad Road, Chinchwad, Pune-411035, Maharashtra</li>
+                    <li>📍 Office No 11, Ram Radha Appartment, Dange Chowk, Chinchwad, Pune-411035</li>
                     <li>📞 +91 7947120803</li>
                     <li>✉️ info@blueskyacservices.com</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved. | Privacy Policy | Terms & Conditions</p>
+            <p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT FOR MOBILE MENU -->
+    <!-- JAVASCRIPT -->
     <script>
+        // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobile-menu');
         const navLinksList = document.getElementById('nav-links-list');
-
         mobileMenuBtn.addEventListener('click', function() {
             navLinksList.classList.toggle('active');
-            
-            if(navLinksList.classList.contains('active')){
-                mobileMenuBtn.innerHTML = '✕';
-            } else {
-                mobileMenuBtn.innerHTML = '☰';
-            }
+            mobileMenuBtn.innerHTML = navLinksList.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Scroll Animations
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            reveals.forEach(reveal => { observer.observe(reveal); });
         });
     </script>
-
 </body>
 </html>

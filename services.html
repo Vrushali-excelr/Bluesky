@@ -5,284 +5,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Services | Bluesky AC Services</title>
     <link rel="stylesheet" href="style.css">
-    
     <style>
-        /* --- HERO BANNER STYLES --- */
+        /* Page Hero */
         .page-hero {
-            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-            height: 40vh;
-            min-height: 300px;
+            position: relative;
+            height: 50vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+        }
+        .page-hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.95));
+        }
+        .page-hero h1 {
+            position: relative; z-index: 1; color: var(--white); font-size: 4rem; font-weight: 900; letter-spacing: -1px;
+        }
+
+        /* --- NEW: Interactive Image Overlay --- */
+        .card-img {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        /* Hover Overlay */
+        .img-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 25, 47, 0.7);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 20px;
-            margin-bottom: 50px;
-        }
-        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon { width: 45px; height: 45px; fill: none; stroke: var(--primary-blue); stroke-width: 8; stroke-linecap: round; }
-        .logo-icon path:nth-child(2) { stroke: var(--accent-blue); }
-        .logo-text { font-size: 24px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; }
-        .logo-text span { color: var(--accent-blue); }
-        .page-hero h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-
-        .page-hero p {
-            font-size: 1.2rem;
-            color: #e0e0e0;
-            max-width: 600px;
-        }
-
-        /* --- SERVICE CARDS STYLES --- */
-        .card {
-            display: flex;
-            flex-direction: column;
-            background: var(--white, #ffffff);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid #eee;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
-
-        .card-img-wrapper {
-            width: 100%;
-            height: 220px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .card-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .card:hover .card-img-wrapper img {
-            transform: scale(1.08);
-        }
-
-        .card-content {
-            padding: 25px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-content h3 {
-            font-size: 1.4rem;
-            color: var(--dark-navy, #0a192f);
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .card-content p {
-            color: var(--text-light, #666666);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        /* --- NEW BUTTON STYLE --- */
-        .service-btn {
-            display: inline-block;
-            background-color: transparent;
-            color: rgb(64, 88, 247);
-            padding: 10px 20px;
-            text-align: left;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: auto;
-            transition: background-color 0.3s, transform 0.2s;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .service-btn:hover {
-            background-color: rgba(64, 88, 247, 0.1);
-            transform: scale(1.02);
-        }
-
-        /* --- LIGHTBOX (POP-UP) STYLES --- */
-        .lightbox {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(10, 25, 47, 0.95); /* Dark Navy transparent bg */
-            backdrop-filter: blur(5px);
             opacity: 0;
             transition: opacity 0.3s ease;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            z-index: 2;
         }
 
-        .lightbox.show {
-            display: flex;
+        .card-img:hover .img-overlay {
             opacity: 1;
         }
 
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 80vh;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            transform: scale(0.8);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy app-like animation */
-            border: 4px solid white;
-            object-fit: contain;
-            background: #000;
+        .card-img:hover img {
+            transform: scale(1.1); /* Zoom effect on hover */
         }
 
-        .lightbox.show .lightbox-content {
-            transform: scale(1);
+        .img-overlay svg {
+            width: 40px; height: 40px;
+            stroke: var(--white);
+            margin-bottom: 10px;
+            transform: translateY(10px);
+            transition: transform 0.3s ease;
         }
 
-        .lightbox-caption {
-            color: white;
-            margin-top: 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
+        .img-overlay span {
+            color: var(--white);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
             letter-spacing: 1px;
+            transform: translateY(10px);
+            transition: transform 0.3s ease;
         }
 
-        .close-lightbox {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 45px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-            line-height: 1;
-        }
-
-        .close-lightbox:hover {
-            color: var(--accent-blue, #00a8ff);
-        }
-
-        /* --- SCROLL FADE-IN ANIMATION --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
+        .card-img:hover .img-overlay svg,
+        .card-img:hover .img-overlay span {
             transform: translateY(0);
         }
 
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-
-        /* --- FEATURES SECTION --- */
-        .features-section {
-            background-color: var(--light-bg, #f4f7f6);
-            padding: 80px 20px;
-            margin-top: 60px;
+        /* Lightbox specific styles */
+        .lightbox { 
+            display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; 
+            background-color: rgba(10, 25, 47, 0.95); backdrop-filter: blur(10px); 
+            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; flex-direction: column; 
         }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .lightbox.show { display: flex; opacity: 1; }
+        .lightbox-content { 
+            max-width: 90%; max-height: 85vh; border-radius: 10px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: 4px solid var(--white); object-fit: contain; background: #000; 
         }
-
-        .feature-box {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .feature-icon {
-            width: 50px;
-            height: 50px;
-            margin: 0 auto 15px auto;
-            color: var(--primary-blue, #0056b3);
-        }
-
-        .feature-box h3 {
-            font-size: 1.2rem;
-            color: var(--dark-navy, #0a192f);
-            margin-bottom: 10px;
-        }
-
-        /* --- MOBILE MENU STYLES --- */
-        .menu-toggle {
-            display: none;
-            font-size: 30px;
-            color: var(--primary-blue, #0056b3);
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 75px;
-                left: 0;
-                width: 100%;
-                background-color: var(--white, #ffffff);
-                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-                padding: 20px 0;
-                gap: 15px;
-                text-align: center;
-                z-index: 999;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-        }
+        .lightbox.show .lightbox-content { transform: scale(1); }
+        .close-lightbox { position: absolute; top: 30px; right: 40px; color: white; font-size: 45px; cursor: pointer; transition: 0.3s; }
+        .close-lightbox:hover { color: var(--accent-orange); }
+        .lightbox-caption { color: white; margin-top: 20px; font-size: 1.2rem; font-weight: 600; letter-spacing: 1px;}
     </style>
 </head>
 <body>
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo-container">
-                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" />
-                    <path d="M15,55 Q45,30 75,55 T95,55" stroke-width="10" />
-                    <path d="M5,75 Q40,50 70,75 T95,75" stroke-width="10" />
-                </svg>
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" /><path d="M15,55 Q45,30 75,55 T95,55" stroke-width="10" /><path d="M5,75 Q40,50 70,75 T95,75" stroke-width="10" /></svg>
                 <div class="logo-text">BLUESKY <span>AC SERVICES</span></div>
-            </a>            
-            
-            <!-- Added ID to toggle menu -->
+            </a>
             <div class="menu-toggle" id="mobile-menu">☰</div>
-            
-            <!-- Added ID to the list -->
             <ul class="nav-links" id="nav-links-list">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
-                <li><a href="services.html" class="active">Services</a></li>
+                <li class="dropdown">
+                    <a href="services.html" class="active">Services ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html">VRF System</a></li>
+                        <li><a href="services.html">AHU & Ducting</a></li>
+                        <li><a href="services.html">Chiller Plants</a></li>
+                        <li><a href="services.html">Central AC</a></li>
+                        <li><a href="services.html">Maintenance & AMC</a></li>
+                    </ul>
+                </li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="clients.html">Clients</a></li>
                 <li><a href="contact.html">Contact</a></li>
@@ -291,123 +124,141 @@
         </div>
     </header>
 
+    <!-- HERO -->
     <section class="page-hero">
+        <div class="page-hero-overlay"></div>
         <h1>Our Services</h1>
-        <p>Comprehensive HVAC solutions tailored for industrial and commercial needs across India.</p>
     </section>
 
-    <section class="section">
-        <div class="section-title reveal">
-            <h2>What We Offer</h2>
-            <p>We cover everything from design engineering supervision to post-installation support.</p>
+    <!-- SERVICES GRID -->
+    <section class="section bg-light">
+        <div class="section-header reveal">
+            <h4>What We Do</h4>
+            <h2>Comprehensive HVAC Solutions</h2>
         </div>
         
         <div class="grid-container">
             <!-- Service 1 -->
-            <div class="card reveal delay-1">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="VRF System Installation">
+            <div class="service-card reveal">
+                <div class="card-img" onclick="openLightbox('images/VRF.png', 'VRF/ VRV System')">
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="VRF">
+                    <div class="img-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                        <span>Click to View</span>
+                    </div>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
                 </div>
                 <div class="card-content">
                     <h3>VRF / VRV Systems</h3>
-                    <p>Energy-efficient Variable Refrigerant Flow systems for offices and commercial buildings. Design, installation, and AMC services.</p>
-                    <!-- Button triggers the pop-up with the same image -->
-                    <button class="service-btn" onclick="openLightbox('images/VRF.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80', 'VRF/ VRV System ')">View Service</button>
+                    <p>Energy-efficient Variable Refrigerant Flow systems for offices and commercial buildings.</p>
                 </div>
             </div>
 
             <!-- Service 2 -->
-            <div class="card reveal delay-2">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="AHU and Ducting Work">
+            <div class="service-card reveal" style="transition-delay: 0.1s;">
+                <div class="card-img" onclick="openLightbox('images/AHU.png', 'AHU & Ducting Installation')">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="AHU">
+                    <div class="img-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                        <span>Click to View</span>
+                    </div>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    </div>
                 </div>
                 <div class="card-content">
                     <h3>AHU & Ducting</h3>
-                    <p>Custom Air Handling Unit installation, insulation, and ducting work for optimal airflow in large facilities.</p>
-                    <button class="service-btn" onclick="openLightbox('images/AHU.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80', 'AHU & Ducting Installation')">View Service</button>
+                    <p>Custom Air Handling Unit installation, insulation, and ducting work for optimal airflow.</p>
                 </div>
             </div>
 
             <!-- Service 3 -->
-            <div class="card reveal delay-3">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Chiller Plants">
+            <div class="service-card reveal" style="transition-delay: 0.2s;">
+                <div class="card-img" onclick="openLightbox('images/chiller.png', 'Industrial Chiller Plant')">
+                    <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Chiller">
+                    <div class="img-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                        <span>Click to View</span>
+                    </div>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    </div>
                 </div>
                 <div class="card-content">
                     <h3>Chiller Plants</h3>
-                    <p>Heavy-duty industrial chiller plants for manufacturing units and large facilities. Complete maintenance and overhauling.</p>
-                    <button class="service-btn" onclick="openLightbox('images/chiller.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80', 'Industrial Chiller Plant Setup')">View Service</button>
+                    <p>Heavy-duty industrial chiller plants for manufacturing units and large facilities.</p>
                 </div>
             </div>
 
             <!-- Service 4 -->
-            <div class="card reveal delay-1">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Central AC Systems">
+            <div class="service-card reveal">
+                <div class="card-img" onclick="openLightbox('images/central-ac.png', 'Central AC Installation')">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Central AC">
+                    <div class="img-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                        <span>Click to View</span>
+                    </div>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                    </div>
                 </div>
                 <div class="card-content">
                     <h3>Central AC Systems</h3>
                     <p>Complete centralized AC systems for commercial spaces, including cassette and ductable units.</p>
-                    <button class="service-btn" onclick="openLightbox('images/central-ac.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80', 'Central AC Cassette Installation')">View Service</button>
                 </div>
             </div>
 
             <!-- Service 5 -->
-            <div class="card reveal delay-2">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Industrial Cooling">
+            <div class="service-card reveal" style="transition-delay: 0.1s;">
+                <div class="card-img" onclick="openLightbox('images/industrial-cool.jpg', 'Industrial Cooling Setup')">
+                    <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Industrial">
+                    <div class="img-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                        <span>Click to View</span>
+                    </div>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
                 </div>
                 <div class="card-content">
                     <h3>Industrial Cooling</h3>
                     <p>Heavy-duty cooling solutions for factories and plants, including cooling towers and package ACs.</p>
-                    <button class="service-btn" onclick="openLightbox('images/industrial-cool.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80', 'Factory Industrial Cooling Setup')">View Service</button>
                 </div>
             </div>
 
             <!-- Service 6 -->
-            <div class="card reveal delay-3">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="AC Maintenance">
+            <div class="service-card reveal" style="transition-delay: 0.2s;">
+                <div class="card-img" onclick="openLightbox('images/maintainence.png', 'Technician Performing Maintenance')">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Maintenance">
+                    <div class="img-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                        <span>Click to View</span>
+                    </div>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    </div>
                 </div>
                 <div class="card-content">
                     <h3>Maintenance & AMC</h3>
                     <p>24/7 preventive maintenance and troubleshooting support for all types of AC systems.</p>
-                    <button class="service-btn" onclick="openLightbox('images/maintainence.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80', 'Technician Performing Maintenance')">View Service</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- WHY CHOOSE US SECTION -->
-    <section class="features-section">
-        <div class="section-title reveal">
-            <h2>Why Choose Bluesky?</h2>
-            <p>We deliver quality, reliability, and total customer satisfaction.</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-box reveal delay-1">
-                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                <h3>Expert Team</h3>
-                <p>Highly skilled engineers, managers, and technicians dedicated to exceeding expectations.</p>
-            </div>
-            <div class="feature-box reveal delay-2">
-                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                <h3>ISO Certified</h3>
-                <p>We maintain strict safety and quality compliance, ensuring 100% code-compliant solutions.</p>
-            </div>
-            <div class="feature-box reveal delay-3">
-                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <h3>24/7 Support</h3>
-                <p>Pan-India service support and prompt response times for all your emergency HVAC needs.</p>
-            </div>
-        </div>
-    </section>
-
+    <!-- FOOTER -->
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
                 <h4>BLUESKY AC SERVICES</h4>
-                <p>Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+                <p style="color:#94a3b8; margin-bottom: 20px;">Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                    <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                </div>
             </div>
             <div class="footer-col">
                 <h4>Quick Links</h4>
@@ -421,9 +272,11 @@
             </div>
             <div class="footer-col">
                 <h4>Contact Us</h4>
-                <p>📍 Office No 11, Ram Radha Appartment, B Building, Dange Chowk, Near Spandan Hospital, Near Sagar Medical, Near Maheri Hospital, Wakad Road, Chinchwad, Pune-411035, Maharashtra</p>
-                <p>📞 +91 7947120803</p>
-                <p>✉️ info@blueskyacservices.com</p>
+                <ul>
+                    <li>📍 Office No 11, Ram Radha Appartment, Dange Chowk, Chinchwad, Pune-411035</li>
+                    <li>📞 +91 7947120803</li>
+                    <li>✉️ info@blueskyacservices.com</li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
@@ -431,77 +284,53 @@
         </div>
     </footer>
 
-    <!-- LIGHTBOX HTML STRUCTURE (Hidden by default) -->
+    <!-- LIGHTBOX MODAL -->
     <div id="imageLightbox" class="lightbox">
         <span class="close-lightbox">&times;</span>
         <img class="lightbox-content" id="lightboxImg" src="" alt="Project Image">
         <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
     
-    <!-- JAVASCRIPT FOR ANIMATIONS AND POP-UP -->
+    <!-- JAVASCRIPT -->
     <script>
-        // --- 1. MOBILE MENU TOGGLE LOGIC ---
+        // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobile-menu');
         const navLinksList = document.getElementById('nav-links-list');
-
         mobileMenuBtn.addEventListener('click', function() {
             navLinksList.classList.toggle('active');
-            
-            // Change icon to 'X' when open
-            if(navLinksList.classList.contains('active')){
-                mobileMenuBtn.innerHTML = '✕';
-            } else {
-                mobileMenuBtn.innerHTML = '☰';
-            }
+            mobileMenuBtn.innerHTML = navLinksList.classList.contains('active') ? '✕' : '☰';
         });
 
-        // --- 2. LIGHTBOX POP-UP LOGIC ---
+        // Lightbox Logic
         const lightbox = document.getElementById("imageLightbox");
         const lightboxImg = document.getElementById("lightboxImg");
         const lightboxCaption = document.getElementById("lightboxCaption");
         const closeBtn = document.querySelector(".close-lightbox");
 
-        // Function called when a user clicks "View Real Project Image"
         function openLightbox(imageSrc, captionText) {
-            lightboxImg.src = imageSrc;         // Set the high-res image URL
-            lightboxCaption.textContent = captionText; // Set the text below the image
-            lightbox.classList.add("show");     // Trigger the CSS fade and zoom animation
-            
-            // Prevent background from scrolling when pop-up is open
-            document.body.style.overflow = "hidden"; 
+            lightboxImg.src = imageSrc;
+            lightboxCaption.textContent = captionText;
+            lightbox.classList.add("show");
+            document.body.style.overflow = "hidden"; // Stop background scrolling
         }
-
-        // Function to close the pop-up
+        
         function closeLightbox() {
             lightbox.classList.remove("show");
-            document.body.style.overflow = "auto"; // Restore scrolling
-            
-            // Wait for fade out animation to finish before clearing the image (prevents flicker)
-            setTimeout(() => { lightboxImg.src = ""; }, 300); 
+            document.body.style.overflow = "auto";
+            setTimeout(() => { lightboxImg.src = ""; }, 300); // Clear image after fade out
         }
-
-        // Close when X is clicked
+        
         closeBtn.addEventListener("click", closeLightbox);
-
-        // Close when clicking anywhere on the dark background
-        lightbox.addEventListener("click", function(e) {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
+        lightbox.addEventListener("click", function(e) { 
+            if (e.target === lightbox) closeLightbox(); 
+        });
+        document.addEventListener("keydown", function(e) { 
+            if (e.key === "Escape" && lightbox.classList.contains("show")) closeLightbox(); 
         });
 
-        // Close when pressing the 'Escape' key on the keyboard
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape" && lightbox.classList.contains("show")) {
-                closeLightbox();
-            }
-        });
-
-
-        // --- 3. SCROLL FADE-IN ANIMATION LOGIC ---
+        // Scroll Animations
         document.addEventListener("DOMContentLoaded", function() {
             const reveals = document.querySelectorAll('.reveal');
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -509,13 +338,8 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, {
-                threshold: 0.15
-            });
-
-            reveals.forEach(reveal => {
-                observer.observe(reveal);
-            });
+            }, { threshold: 0.15 });
+            reveals.forEach(reveal => { observer.observe(reveal); });
         });
     </script>
 </body>

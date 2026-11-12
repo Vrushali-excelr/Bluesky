@@ -1,57 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Bluesky AC Services</title>
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Added inline styles specifically for the mobile menu to ensure it works -->
     <style>
-        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon { width: 45px; height: 45px; fill: none; stroke: var(--primary-blue); stroke-width: 8; stroke-linecap: round; }
-        .logo-icon path:nth-child(2) { stroke: var(--accent-blue); }
-        .logo-text { font-size: 24px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; }
-        .logo-text span { color: var(--accent-blue); }
-
-        /* Hamburger Icon Style */
-        .menu-toggle {
-            display: none;
-            font-size: 30px;
-            color: var(--primary-blue, #0056b3);
-            cursor: pointer;
-            z-index: 1001;
+        /* --- PAGE SPECIFIC STYLES --- */
+        
+        /* Hero Section */
+        .page-hero {
+            position: relative;
+            height: 50vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            background-attachment: fixed; /* Parallax effect */
+        }
+        .page-hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.9));
+        }
+        .page-hero h1 {
+            position: relative; z-index: 1; color: var(--white); font-size: 4rem; font-weight: 900;
+            letter-spacing: -1px;
         }
 
-        /* Mobile Menu Logic */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
+        /* About Content Split */
+        .about-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .about-text h2 { font-size: 2.5rem; color: var(--dark-navy); margin-bottom: 20px; line-height: 1.2;}
+        .about-text p { color: var(--text-light); font-size: 1.1rem; margin-bottom: 20px; }
+        .about-list { list-style: none; margin-top: 30px; }
+        .about-list li {
+            font-size: 1.1rem; font-weight: 600; color: var(--dark-navy); margin-bottom: 15px;
+            display: flex; align-items: center; gap: 15px;
+        }
+        .about-list li::before {
+            content: "✓"; display: flex; justify-content: center; align-items: center;
+            width: 28px; height: 28px; background: var(--accent-orange); color: var(--white);
+            border-radius: 50%; font-size: 0.9rem; flex-shrink: 0;
+        }
 
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 75px;
-                left: 0;
-                width: 100%;
-                background-color: var(--white, #ffffff);
-                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-                padding: 20px 0;
-                gap: 15px;
-                text-align: center;
-                z-index: 999;
-            }
+        /* Dark Vision Card */
+        .vision-card {
+            background-color: #0b1120;
+            background-image: radial-gradient(circle at top right, rgba(0, 86, 179, 0.2) 0%, transparent 60%);
+            padding: 50px;
+            border-radius: 12px;
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .vision-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--accent-orange);
+        }
+        .vision-card h3 { font-size: 1.8rem; margin-bottom: 20px; font-weight: 800; }
+        .vision-card p { color: #94a3b8; font-size: 1.05rem; margin-bottom: 15px; line-height: 1.8; }
 
-            .nav-links.active {
-                display: flex;
-            }
+        /* --- ANIMATED TESTIMONIALS --- */
+        .testimonial-section {
+            background-color: var(--light-bg);
+            padding: 100px 20px;
+            text-align: center;
+            overflow: hidden;
+        }
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 250px; /* Prevents layout jump */
+        }
+        .testimonial-slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            visibility: hidden;
+        }
+        .testimonial-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+            position: relative; /* Takes up space when active */
+        }
+        .quote-icon {
+            width: 50px; height: 50px; margin: 0 auto 20px auto; color: var(--accent-orange);
+            opacity: 0.5;
+        }
+        .testimonial-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-navy);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .client-info h4 { font-size: 1.1rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;}
+        .client-info p { font-size: 0.9rem; color: var(--text-light); font-weight: 600; }
+
+        @media (max-width: 900px) {
+            .about-split { grid-template-columns: 1fr; gap: 40px; }
+            .page-hero h1 { font-size: 2.5rem; }
+            .vision-card { padding: 30px; }
+            .testimonial-text { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
+
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo-container">
@@ -62,74 +130,186 @@
                 </svg>
                 <div class="logo-text">BLUESKY <span>AC SERVICES</span></div>
             </a>
-            
-            <!-- Added ID to toggle menu -->
             <div class="menu-toggle" id="mobile-menu">☰</div>
-            
-            <!-- Added ID to the list -->
             <ul class="nav-links" id="nav-links-list">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html" class="active">About Us</a></li>
-                <li><a href="services.html">Services</a></li>
+                <li class="dropdown">
+                    <a href="services.html">Services ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html">VRF System</a></li>
+                        <li><a href="services.html">AHU & Ducting</a></li>
+                        <li><a href="services.html">Chiller Plants</a></li>
+                        <li><a href="services.html">Central AC</a></li>
+                        <li><a href="services.html">Maintenance & AMC</a></li>
+                    </ul>
+                </li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="clients.html">Clients</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="contact.html" class="btn-quote">Get Quote</a></li>
+                <li><a href="contact.html" class="btn-quote">Get Quote</a></li> 
             </ul>
         </div>
     </header>
 
+    <!-- HERO SECTION -->
+    <section class="page-hero">
+        <div class="page-hero-overlay"></div>
+        <h1>About Our Company</h1>
+    </section>
+
+    <!-- MAIN CONTENT -->
     <section class="section">
-        <div class="section-title">
-            <h2>About Bluesky AC Services</h2>
-            <p>Delivering Quality, Reliability, and Total Customer Satisfaction</p>
-        </div>
-        <div class="about-content">
-            <div class="about-text">
+        <div class="about-split">
+            
+            <!-- Left Text -->
+            <div class="about-text reveal">
+                <h4 style="color: var(--accent-orange); font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.9rem;">Who We Are</h4>
+                <h2>Delivering Excellence in HVAC Solutions</h2>
                 <p>We introduce ourselves as one of the leading service provider companies in the field of Air Conditioning. With over 7 years of experience, we have been regularly providing services for various industries, business complexes, corporate offices, small shops, malls, and housing societies.</p>
                 <p>We cover everything from design engineering supervision, installation, and post-installation support for VRV/VRF, AHU systems, chillers, cooling towers, and more.</p>
-                <h3>Why Choose Us?</h3>
-                <ul>
+                
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--dark-navy); font-size: 1.4rem;">Why Choose Us?</h3>
+                <ul class="about-list">
                     <li>ISO Certified & Safety Compliant</li>
                     <li>Expert Team of HVAC Engineers & Technicians</li>
                     <li>Pan-India Service & 24/7 Support</li>
                     <li>Authorized Dealer for Blue Star</li>
                 </ul>
             </div>
-            <div class="card" style="padding: 20px; background: var(--light-bg);">
-                <h3 style="color: var(--primary-blue);">Our Vision</h3>
+
+            <!-- Right Dark Card -->
+            <div class="vision-card reveal" style="transition-delay: 0.2s;">
+                <div class="info-icon" style="width: 60px; height: 60px; background: rgba(255, 107, 0, 0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2" style="width: 30px; height: 30px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </div>
+                <h3>Our Vision & Safety</h3>
                 <p>As part of our commitment to achieving the principles of health and safety in our workplace, we recognize our moral and legal responsibility to provide a safe and healthy work environment for employees, contractors, customers, and visitors.</p>
-                <p style="margin-top: 15px;">This commitment also extends to ensuring that our operations do not place the local community or environment at risk of injury, illness, or damage.</p>
+                <p>This commitment also extends to ensuring that our operations do not place the local community or environment at risk of injury, illness, or damage.</p>
             </div>
+
         </div>
     </section>
 
+    <!-- ANIMATED TESTIMONIALS SECTION -->
+    <section class="testimonial-section">
+        <div class="section-header reveal" style="text-align: center;">
+            <h4>Client Feedback</h4>
+            <h2>What People Say About Us</h2>
+        </div>
+
+        <div class="testimonial-container reveal">
+            
+            <!-- Slide 1 -->
+            <div class="testimonial-slide active">
+                <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                <p class="testimonial-text">"Bluesky AC Services completely transformed our factory's cooling system. Their team was professional, and the installation was seamless. Highly recommended for industrial projects."</p>
+                <div class="client-info">
+                    <h4>Rajesh Sharma</h4>
+                    <p>Plant Manager, Fabtech India</p>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="testimonial-slide">
+                <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                <p class="testimonial-text">"We rely on Bluesky for all our AMC needs across our commercial offices. Their 24/7 support and quick response times give us complete peace of mind."</p>
+                <div class="client-info">
+                    <h4>Priya Desai</h4>
+                    <p>Facilities Head, Pavilion Data</p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="testimonial-slide">
+                <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                <p class="testimonial-text">"The expertise they brought to our VRF installation was outstanding. Clean work, on-time delivery, and excellent after-sales service."</p>
+                <div class="client-info">
+                    <h4>Amit Patel</h4>
+                    <p>Director, Shri Bal Ganesh Developers</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER WITH SOCIAL ICONS -->
     <footer>
         <div class="footer-grid">
-            <div class="footer-col"><h4>BLUESKY AC SERVICES</h4><p>Your trusted partner for complete HVAC & industrial cooling solutions.</p></div>
-            <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li></ul></div>
-            <div class="footer-col"><h4>Contact Us</h4><p>📍 Office No 11, Ram Radha Appartment, B Building, Dange Chowk, Near Spandan Hospital, Near Sagar Medical, Near Maheri Hospital, Wakad Road, Chinchwad, Pune-411035, Maharashtra</p><p>📞 +91 7947120803</p></div>
+            <div class="footer-col">
+                <h4>BLUESKY AC SERVICES</h4>
+                <p style="color:#94a3b8; margin-bottom: 20px;">Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                    <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul>
+                    <li>📍 Office No 11, Ram Radha Appartment, Dange Chowk, Chinchwad, Pune-411035</li>
+                    <li>📞 +91 7947120803</li>
+                    <li>✉️ info@blueskyacservices.com</li>
+                </ul>
+            </div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved.</p></div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved.</p>
+        </div>
     </footer>
 
-    <!-- Added Inline Javascript for Menu Toggle -->
+    <!-- JAVASCRIPT -->
     <script>
+        // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobile-menu');
         const navLinksList = document.getElementById('nav-links-list');
-
         mobileMenuBtn.addEventListener('click', function() {
             navLinksList.classList.toggle('active');
-            
-            if(navLinksList.classList.contains('active')){
-                mobileMenuBtn.innerHTML = '✕';
-            } else {
-                mobileMenuBtn.innerHTML = '☰';
-            }
+            mobileMenuBtn.innerHTML = navLinksList.classList.contains('active') ? '✕' : '☰';
         });
+
+        // Scroll Animation Observer
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            reveals.forEach(reveal => { observer.observe(reveal); });
+        });
+
+        // --- TESTIMONIAL SLIDER LOGIC ---
+        const slides = document.querySelectorAll('.testimonial-slide');
+        let currentSlide = 0;
+
+        function showNextSlide() {
+            // Remove active class from current
+            slides[currentSlide].classList.remove('active');
+            
+            // Calculate next slide index
+            currentSlide = (currentSlide + 1) % slides.length;
+            
+            // Add active class to next
+            slides[currentSlide].classList.add('active');
+        }
+
+        // Change slide every 4 seconds
+        setInterval(showNextSlide, 4000);
     </script>
-    
-    <!-- Your original script tag kept here -->
-    <script src="script.js"></script>
 </body>
 </html>

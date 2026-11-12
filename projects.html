@@ -4,428 +4,288 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Projects | Bluesky AC Services</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS RESET & VARIABLES */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary-blue: #0056b3;
-            --accent-blue: #00a8ff;
-            --dark-navy: #0a192f;
-            --light-bg: #f4f7f6;
-            --white: #ffffff;
-            --text-dark: #333333;
-            --text-light: #666666;
-            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* Page Hero */
+        .page-hero { 
+            position: relative; height: 50vh; min-height: 400px; display: flex; align-items: center; justify-content: center; text-align: center; 
+            background: url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; 
         }
-        body { font-family: var(--font-main); line-height: 1.6; color: var(--text-dark); background-color: var(--white); }
+        .page-hero-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.95)); }
+        .page-hero h1 { position: relative; z-index: 1; color: var(--white); font-size: 4rem; font-weight: 900; letter-spacing: -1px; }
 
-        /* NAVIGATION */
-        header {
-            background: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky; top: 0; z-index: 1000;
-        }
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            max-width: 1200px; margin: 0 auto; padding: 15px 20px;
-        }
-        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon { width: 45px; height: 45px; fill: none; stroke: var(--primary-blue); stroke-width: 8; stroke-linecap: round; }
-        .logo-icon path:nth-child(2) { stroke: var(--accent-blue); }
-        .logo-text { font-size: 24px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; }
-        .logo-text span { color: var(--accent-blue); }
-
-        .nav-links { display: flex; list-style: none; gap: 30px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
-        .btn-quote {
-            background: #ff8c00; color: var(--white)!important; padding: 10px 25px;
-            border-radius: 5px; text-decoration: none; font-weight: 600; transition: background 0.3s;
-        }
-        .btn-quote:hover { background: var(--accent-blue); }
-
-        /* --- NEW: HAMBURGER MENU STYLES --- */
-        .menu-toggle {
-            display: none; /* Hidden on desktop */
-            font-size: 30px;
-            color: var(--primary-blue);
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        /* PAGE HEADER */
-        .page-header {
-            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-            padding: 100px 20px; text-align: center; color: var(--white);
-        }
-        .page-header h1 { font-size: 3rem; margin-bottom: 10px; }
-
-        /* PROJECTS SECTION */
-        .projects-section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
-        
-        .project-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 25px; 
-        }
-        
-        .project-card {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            height: 300px;
-            cursor: pointer;
-        }
-        
-        .project-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .project-card:hover img {
-            transform: scale(1.1);
-        }
-        
-        .project-overlay {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(10, 25, 47, 0.9));
-            padding: 30px 20px 20px;
-            color: var(--white);
-            transform: translateY(10px);
-            transition: transform 0.3s ease;
-            pointer-events: none;
-        }
-        
-        .project-card:hover .project-overlay {
-            transform: translateY(0);
-        }
-        
-        .project-overlay h3 { font-size: 1.3rem; margin-bottom: 5px; }
-        .project-overlay p { color: var(--accent-blue); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;}
-
-        /* --- SCROLL FADE-IN ANIMATION STYLES --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-
-        /* --- LIGHTBOX (POP-UP) STYLES --- */
-        .lightbox {
-            display: none; 
-            position: fixed;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(10, 25, 47, 0.95); 
-            backdrop-filter: blur(5px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .lightbox.show {
-            display: flex;
-            opacity: 1;
-        }
-
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 85vh;
-            border-radius: 8px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            transform: scale(0.8);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 4px solid var(--white);
-            object-fit: contain;
-            background: #000;
-        }
-
-        .lightbox.show .lightbox-content {
-            transform: scale(1);
-        }
-
-        .close-lightbox {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 45px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-            line-height: 1;
-        }
-
-        .close-lightbox:hover {
-            color: var(--accent-blue);
-        }
-
-        /* --- VISION & FACULTY SECTION STYLES --- */
-        .info-section {
-            background-color: var(--light-bg);
-            padding: 80px 20px;
-            border-top: 1px solid #eaeaea;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
+        /* --- MASONRY PROJECT GALLERY --- */
+        .masonry-grid {
+            column-count: 3;
+            column-gap: 20px;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
-        @media (max-width: 768px) {
-            .info-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 1024px) { .masonry-grid { column-count: 2; } }
+        @media (max-width: 768px) { .masonry-grid { column-count: 1; } }
 
-        .info-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border-top: 5px solid var(--primary-blue);
+        .project-card {
             position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            break-inside: avoid;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .info-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 86, 179, 0.1);
-            color: var(--primary-blue);
-            border-radius: 50%;
+        /* Varying heights for masonry effect */
+        .project-card:nth-child(1) img { height: 400px; }
+        .project-card:nth-child(2) img { height: 300px; }
+        .project-card:nth-child(3) img { height: 350px; }
+        .project-card:nth-child(4) img { height: 450px; }
+        .project-card:nth-child(5) img { height: 300px; }
+        .project-card:nth-child(6) img { height: 350px; }
+
+        .project-card img {
+            width: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Hover Overlay */
+        .project-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 25, 47, 0.7);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin-bottom: 25px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
         }
 
-        .info-icon svg {
-            width: 30px;
-            height: 30px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
+        .project-card:hover .project-overlay {
+            opacity: 1;
         }
 
-        .info-card h2 {
-            font-size: 1.8rem;
-            color: var(--dark-navy);
-            margin-bottom: 15px;
-            font-weight: 800;
+        .project-overlay svg {
+            width: 45px; height: 45px; stroke: var(--white);
+            margin-bottom: 15px; transform: translateY(15px); transition: transform 0.3s ease;
         }
 
-        .info-card p {
-            color: var(--text-light);
-            font-size: 1rem;
-            margin-bottom: 20px;
-            line-height: 1.8;
+        .project-overlay span {
+            color: var(--white); font-weight: 700; font-size: 1rem;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            transform: translateY(15px); transition: transform 0.3s ease;
         }
 
-        /* Specific list styling for the Faculty & Services section */
-        .service-list {
-            list-style: none;
+        .project-card:hover .project-overlay svg,
+        .project-card:hover .project-overlay span {
+            transform: translateY(0);
         }
 
-        .service-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-            font-weight: 500;
-            font-size: 0.95rem;
+        /* --- INFO CARDS (Vision & Faculty) --- */
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; margin-top: 80px; }
+        .info-card { background: var(--white); border-radius: 15px; padding: 50px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); border-top: 5px solid var(--accent-orange); }
+        .info-icon { width: 70px; height: 70px; background: rgba(255, 107, 0, 0.1); color: var(--accent-orange); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 30px; }
+        .info-icon svg { width: 35px; height: 35px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .info-card h2 { font-size: 2rem; color: var(--dark-navy); margin-bottom: 20px; }
+        .service-list { list-style: none; }
+        .service-list li { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; font-weight: 500; color: var(--text-dark); }
+        .service-list li .check-icon { color: var(--accent-orange); font-size: 1.2rem; }
+
+        /* --- ANIMATED PROJECT MODAL --- */
+        .project-modal {
+            display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(6, 15, 30, 0.95); backdrop-filter: blur(10px);
+            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease;
+        }
+        .project-modal.show { display: flex; opacity: 1; }
+        
+        .modal-wrapper {
+            background: var(--white); border-radius: 15px; max-width: 1100px; width: 90%; max-height: 90vh;
+            display: flex; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .project-modal.show .modal-wrapper { transform: scale(1); }
+
+        .modal-left { flex: 1.5; background: #000; display: flex; align-items: center; justify-content: center; }
+        .modal-left img { width: 100%; height: 100%; max-height: 90vh; object-fit: contain; }
+
+        .modal-right { flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center; background: var(--white); position: relative;}
+        
+        .modal-company-logo {
+            width: 80px; height: auto; margin-bottom: 20px; object-fit: contain;
         }
 
-        .service-list li .check-icon {
-            color: var(--accent-blue);
-            font-weight: bold;
-            font-size: 1.2rem;
-            line-height: 1.2;
+        .modal-right h2 { font-size: 2.2rem; color: var(--dark-navy); margin-bottom: 10px; line-height: 1.2; }
+        .modal-location { font-size: 0.9rem; font-weight: 700; color: var(--accent-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; }
+        .modal-desc { font-size: 1.05rem; color: var(--text-light); line-height: 1.8; }
+
+        .close-project-modal {
+            position: absolute; top: 20px; right: 30px; color: var(--dark-navy);
+            font-size: 35px; font-weight: bold; cursor: pointer; transition: 0.3s; line-height: 1;
         }
+        .close-project-modal:hover { color: var(--accent-orange); transform: rotate(90deg); }
 
-        /* FOOTER */
-        footer { background: var(--dark-navy); color: var(--white); padding: 60px 20px 20px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
-        .footer-col h4 { margin-bottom: 20px; color: var(--accent-blue); }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 10px; color: #ccc; }
-        .footer-col ul li a { color: #ccc; text-decoration: none; transition: color 0.3s; }
-        .footer-col ul li a:hover { color: var(--white); }
-        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1c3a5e; color: #888; font-size: 0.9rem; }
-
-        /* --- RESPONSIVE / MOBILE STYLES --- */
-        @media (max-width: 768px) {
-            /* Mobile Menu Logic */
-            .menu-toggle {
-                display: block; /* Show hamburger */
-            }
-
-            .nav-links {
-                display: none; /* Hide menu by default */
-                flex-direction: column;
-                position: absolute;
-                top: 75px; /* Height of header */
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-                padding: 20px 0;
-                gap: 15px;
-                text-align: center;
-                z-index: 999;
-            }
-
-            /* Class added by JS to show menu */
-            .nav-links.active {
-                display: flex;
-            }
+        @media (max-width: 900px) {
+            .modal-wrapper { flex-direction: column; max-height: 95vh; overflow-y: auto; }
+            .modal-left { flex: none; height: 40vh; }
+            .modal-right { padding: 30px; }
+            .close-project-modal { color: white; text-shadow: 0 0 10px black; z-index: 10; }
         }
     </style>
 </head>
 <body>
-
-    <!-- HEADER -->
     <header>
-        <nav>
+        <div class="nav-container">
             <a href="index.html" class="logo-container">
-                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" />
-                    <path d="M15,55 Q45,30 75,55 T95,55" stroke-width="10" />
-                    <path d="M5,75 Q40,50 70,75 T95,75" stroke-width="10" />
-                </svg>
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M5,35 Q40,10 70,35 T95,35" stroke-width="10" /><path d="M15,55 Q45,30 75,55 T95,55" stroke-width="10" /><path d="M5,75 Q40,50 70,75 T95,75" stroke-width="10" /></svg>
                 <div class="logo-text">BLUESKY <span>AC SERVICES</span></div>
-            </a>            
-            
-            <!-- Hamburger Icon Added Here -->
+            </a>
             <div class="menu-toggle" id="mobile-menu">☰</div>
-
-            <!-- Added ID here for JavaScript -->
             <ul class="nav-links" id="nav-links-list">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
-                <li><a href="services.html">Services</a></li>
+                <li class="dropdown">
+                    <a href="services.html">Services ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html">VRF System</a></li>
+                        <li><a href="services.html">AHU & Ducting</a></li>
+                        <li><a href="services.html">Chiller Plants</a></li>
+                        <li><a href="services.html">Central AC</a></li>
+                        <li><a href="services.html">Maintenance & AMC</a></li>
+                    </ul>
+                </li>
                 <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="clients.html">Clients</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <!-- Moved Get Quote button inside the list for mobile alignment -->
                 <li><a href="contact.html" class="btn-quote">Get Quote</a></li>
             </ul>
-        </nav>
+        </div>
     </header>
 
-    <!-- PAGE HEADER -->
-    <section class="page-header">
+    <!-- HERO -->
+    <section class="page-hero">
+        <div class="page-hero-overlay"></div>
         <h1>Our Projects</h1>
-        <p>A showcase of our recent installations, maintenance work, and satisfied clients.</p>
     </section>
 
-    <!-- PROJECTS SECTION -->
-    <section class="projects-section">
-        <div class="project-grid">
+    <section class="section bg-light">
+        <div class="section-header reveal" style="text-align: center; margin-bottom: 50px;">
+            <h4>Our Portfolio</h4>
+            <h2>Recent Installations</h2>
+        </div>
+
+        <!-- MASONRY GALLERY -->
+        <div class="masonry-grid">
             
             <!-- Project 1 -->
-            <div class="project-card reveal delay-1" onclick="openLightbox('images/tr-work.png')">
-                <img src="images/chiller-project.png" alt="Industrial Cooling Plant">
+            <div class="project-card reveal" onclick="openProjectModal(
+                'images/chiller.png', 
+                'images/lupin_logo.png', 
+                '1000 TR Chiller Plant', 
+                'Pune | Industrial Installation', 
+                'Successfully designed and installed a massive 1000 TR chiller plant for a leading manufacturing facility. The project included complete piping, insulation, and electrical integration, ensuring seamless cooling for heavy machinery.'
+            )">
+                <img src="images/chiller-project.png" alt="Chiller Plant">
                 <div class="project-overlay">
-                    <h3>1000 TR Chiller Plant</h3>
-                    <p>Pune | Industrial Installation</p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    <span>View Project</span>
                 </div>
             </div>
 
             <!-- Project 2 -->
-            <div class="project-card reveal delay-2" onclick="openLightbox('images/vrc-work.png')">
-                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="VRF Installation">
+            <div class="project-card reveal" style="transition-delay: 0.1s;" onclick="openProjectModal(
+                'images/vrc-work.png', 
+                'images/logo.png', 
+                'VRF System Installation', 
+                'Mumbai | Commercial Building', 
+                'Complete VRF system rollout for a multi-story commercial office complex. We handled the entire ducting, refrigerant piping, and smart thermostat integration to optimize energy consumption.'
+            )">
+                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="VRF">
                 <div class="project-overlay">
-                    <h3>VRF System Installation</h3>
-                    <p>Mumbai | Commercial Building</p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    <span>View Project</span>
                 </div>
             </div>
 
             <!-- Project 3 -->
-            <div class="project-card reveal delay-3" onclick="openLightbox('images/ahu-work.png')">
-                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="AHU Insulation">
+            <div class="project-card reveal" style="transition-delay: 0.2s;" onclick="openProjectModal(
+                'images/ahu-work.png', 
+                'images/lupin_logo.png', 
+                'AHU Insulation Work', 
+                'Lupin Pharmaceuticals | Bhosari', 
+                'Specialized thermal insulation for Air Handling Units in a pharmaceutical clean room environment. Our work ensured precise temperature and humidity control critical for drug manufacturing.'
+            )">
+                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="AHU">
                 <div class="project-overlay">
-                    <h3>AHU Insulation Work</h3>
-                    <p>Lupin Pharmaceuticals | Bhosari</p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    <span>View Project</span>
                 </div>
             </div>
 
             <!-- Project 4 -->
-            <div class="project-card reveal delay-1" onclick="openLightbox('images/ac-fitting.png')">
-                <img src="images/central-work.jpeg" alt="Factory Cooling">
+            <div class="project-card reveal" onclick="openProjectModal(
+                'images/central-ac.png', 
+                'images/fabtech_logo.png', 
+                'Central AC Setup', 
+                'Fabtech India Projects | Bhosari', 
+                'Turnkey central air conditioning installation for a large-scale engineering workshop. The system was designed to handle high heat loads and dust filtration, improving worker comfort and machine efficiency.'
+            )">
+                <img src="images/central-work.jpeg" alt="Central AC">
                 <div class="project-overlay">
-                    <h3>Central AC Setup</h3>
-                    <p>Fabtech India Projects | Bhosari</p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    <span>View Project</span>
                 </div>
             </div>
 
             <!-- Project 5 -->
-            <div class="project-card reveal delay-2" onclick="openLightbox('images/ac-fitting.png')">
-                <img src="images/ac-work.png" alt="Office AC">
+            <div class="project-card reveal" style="transition-delay: 0.1s;" onclick="openProjectModal(
+                'images/ac-fitting.png', 
+                'images/isa-spa.jpeg', 
+                'Cassette AC Fitting', 
+                'ISA Spa | Aundh', 
+                'Discreet and elegant cassette AC installations for a premium spa and wellness center. We prioritized silent operation and aesthetic ceiling integration to maintain the tranquil atmosphere.'
+            )">
+                <img src="images/ac-work.png" alt="Cassette AC">
                 <div class="project-overlay">
-                    <h3>Cassette AC Fitting</h3>
-                    <p>ISA Spa | Aundh</p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    <span>View Project</span>
                 </div>
             </div>
 
             <!-- Project 6 -->
-            <div class="project-card reveal delay-3" onclick="openLightbox('images/bluesky-maintaince.png')">
-                <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Maintenance Work">
+            <div class="project-card reveal" style="transition-delay: 0.2s;" onclick="openProjectModal(
+                'images/maintainence.png', 
+                'images/Voltas.png', 
+                'Package AC Maintenance', 
+                'Voltas Unit | Commercial Complex', 
+                'Comprehensive AMC and breakdown maintenance for a bank of Voltas package AC units. We performed deep coil cleaning, compressor checks, and replaced worn-out filters to restore peak performance.'
+            )">
+                <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Maintenance">
                 <div class="project-overlay">
-                    <h3>Package AC Maintenance</h3>
-                    <p>Voltas Unit | Commercial Complex</p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    <span>View Project</span>
                 </div>
             </div>
 
         </div>
-    </section>
 
-    <!-- NEW: VISION & FACULTY SECTION -->
-    <section class="info-section">
+        <!-- INFO CARDS -->
         <div class="info-grid">
-            
-            <!-- Vision Card -->
-            <div class="info-card reveal delay-1">
-                <div class="info-icon">
-                    <!-- Shield/Eye Icon for Vision -->
-                    <svg viewBox="0 0 24 24">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                </div>
+            <div class="info-card reveal">
+                <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
                 <h2>Our Vision & Safety</h2>
                 <p>As part of our commitment to achieving the principles of health and safety in our workplace, we recognize our moral and legal responsibility to provide a safe and healthy work environment.</p>
                 <p>This commitment extends to ensuring that our operations do not place the local community or environment at risk of injury, illness, or damage.</p>
             </div>
-
-            <!-- Faculty & Services Card -->
-            <div class="info-card reveal delay-2">
-                <div class="info-icon">
-                    <!-- Wrench Icon for Services -->
-                    <svg viewBox="0 0 24 24">
-                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-                    </svg>
-                </div>
+            <div class="info-card reveal" style="transition-delay: 0.2s;">
+                <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></div>
                 <h2>Faculty & Services</h2>
                 <p>We provide comprehensive support for all major cooling and refrigeration systems:</p>
                 <ul class="service-list">
@@ -436,7 +296,6 @@
                     <li><span class="check-icon">✔</span> Cooling Tower, D-Fridge & Water Cooler</li>
                 </ul>
             </div>
-
         </div>
     </section>
 
@@ -445,7 +304,12 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <h4>BLUESKY AC SERVICES</h4>
-                <p>Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+                <p style="color:#94a3b8; margin-bottom: 20px;">Your trusted partner for complete HVAC & industrial cooling solutions.</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                    <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                </div>
             </div>
             <div class="footer-col">
                 <h4>Quick Links</h4>
@@ -460,75 +324,82 @@
             <div class="footer-col">
                 <h4>Contact Us</h4>
                 <ul>
-                                        <li>📍 Office No 11, Ram Radha Appartment, B Building, Dange Chowk, Near Spandan Hospital, Near Sagar Medical, Near Maheri Hospital, Wakad Road, Chinchwad, Pune-411035, Maharashtra</li>
+                    <li>📍 Office No 11, Ram Radha Appartment, Dange Chowk, Chinchwad, Pune-411035</li>
                     <li>📞 +91 7947120803</li>
                     <li>✉️ info@blueskyacservices.com</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved. | Privacy Policy | Terms & Conditions</p>
+            <p>&copy; 2026 BLUESKY AC SERVICES. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- LIGHTBOX HTML STRUCTURE -->
-    <div id="imageLightbox" class="lightbox">
-        <span class="close-lightbox">&times;</span>
-        <img class="lightbox-content" id="lightboxImg" src="" alt="Project Image">
+    <!-- ANIMATED PROJECT MODAL -->
+    <div id="projectModal" class="project-modal">
+        <div class="modal-wrapper">
+            <div class="modal-left">
+                <img id="modalImage" src="" alt="Project Image">
+            </div>
+            <div class="modal-right">
+                <span class="close-project-modal" onclick="closeProjectModal()">&times;</span>
+                <!-- Use placeholder for logo if actual logo isn't available, here using text fallback if img fails -->
+                <img id="modalLogo" src="" alt="Company Logo" class="modal-company-logo" onerror="this.style.display='none'">
+                <h2 id="modalTitle"></h2>
+                <p class="modal-location" id="modalLocation"></p>
+                <p class="modal-desc" id="modalDesc"></p>
+            </div>
+        </div>
     </div>
 
-    <!-- JAVASCRIPT FOR ANIMATIONS AND POP-UP -->
+    <!-- JAVASCRIPT -->
     <script>
-        // --- 1. MOBILE MENU TOGGLE LOGIC ---
+        // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobile-menu');
         const navLinksList = document.getElementById('nav-links-list');
-
         mobileMenuBtn.addEventListener('click', function() {
             navLinksList.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinksList.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Project Modal Logic
+        const projectModal = document.getElementById("projectModal");
+        const modalImage = document.getElementById("modalImage");
+        const modalLogo = document.getElementById("modalLogo");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalLocation = document.getElementById("modalLocation");
+        const modalDesc = document.getElementById("modalDesc");
+
+        function openProjectModal(imgSrc, logoSrc, title, location, description) {
+            modalImage.src = imgSrc;
+            modalLogo.src = logoSrc;
+            modalLogo.style.display = 'block'; // Reset display in case it failed previously
+            modalTitle.textContent = title;
+            modalLocation.textContent = location;
+            modalDesc.textContent = description;
             
-            // Change icon to 'X' when open
-            if(navLinksList.classList.contains('active')){
-                mobileMenuBtn.innerHTML = '✕';
-            } else {
-                mobileMenuBtn.innerHTML = '☰';
-            }
-        });
-
-        // --- 2. LIGHTBOX POP-UP LOGIC ---
-        const lightbox = document.getElementById("imageLightbox");
-        const lightboxImg = document.getElementById("lightboxImg");
-        const closeBtn = document.querySelector(".close-lightbox");
-
-        function openLightbox(imageSrc) {
-            lightboxImg.src = imageSrc;         
-            lightbox.classList.add("show");     
-            document.body.style.overflow = "hidden"; 
+            projectModal.classList.add("show");
+            document.body.style.overflow = "hidden"; // Stop background scrolling
         }
-
-        function closeLightbox() {
-            lightbox.classList.remove("show");
-            document.body.style.overflow = "auto"; 
-            setTimeout(() => { lightboxImg.src = ""; }, 300); 
+        
+        function closeProjectModal() {
+            projectModal.classList.remove("show");
+            document.body.style.overflow = "auto";
         }
-
-        closeBtn.addEventListener("click", closeLightbox);
-
-        lightbox.addEventListener("click", function(e) {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
+        
+        // Close when clicking outside the modal wrapper
+        projectModal.addEventListener("click", function(e) { 
+            if (e.target === projectModal) closeProjectModal(); 
+        });
+        
+        // Close with Escape key
+        document.addEventListener("keydown", function(e) { 
+            if (e.key === "Escape" && projectModal.classList.contains("show")) closeProjectModal(); 
         });
 
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape" && lightbox.classList.contains("show")) {
-                closeLightbox();
-            }
-        });
-
-        // --- 3. SCROLL FADE-IN ANIMATION LOGIC ---
+        // Scroll Animations
         document.addEventListener("DOMContentLoaded", function() {
             const reveals = document.querySelectorAll('.reveal');
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -536,15 +407,9 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, {
-                threshold: 0.15
-            });
-
-            reveals.forEach(reveal => {
-                observer.observe(reveal);
-            });
+            }, { threshold: 0.15 });
+            reveals.forEach(reveal => { observer.observe(reveal); });
         });
     </script>
-
 </body>
 </html>
