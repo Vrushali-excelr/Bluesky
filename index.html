@@ -8,36 +8,32 @@
     <style>
         /* --- NEW GALLERY SECTION STYLES --- */
         .gallery-section {
-            padding: 80px 20px; /* Reduced padding */
+            padding: 80px 20px; 
             background-color: var(--white);
             text-align: center;
         }
         
         .gallery-container {
-            max-width: 1100px; /* Reduced max width */
+            max-width: 1100px; 
             margin: 0 auto;
             position: relative;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            height: 450px; /* Reduced height */
-        }
-
-        @media (max-width: 768px) {
-            .gallery-container { height: 250px; }
+            height: 450px; 
         }
 
         .gallery-track {
             display: flex;
             height: 100%;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Faster, snappier slide */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
         }
 
         .gallery-slide {
             min-width: 100%;
             height: 100%;
             position: relative;
-            cursor: pointer; /* Shows pointer to indicate clickable */
+            cursor: pointer;
         }
 
         .gallery-slide img {
@@ -48,7 +44,7 @@
         }
 
         .gallery-slide:hover img {
-            transform: scale(1.03); /* Subtle zoom on hover */
+            transform: scale(1.03); 
         }
 
         /* Dark overlay on images so text pops */
@@ -128,29 +124,44 @@
         }
         .gallery-lightbox img {
             max-width: 90%;
-            max-height: 90vh;
+            max-height: 85vh;
             border-radius: 10px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             transform: scale(0.9);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 4px solid var(--white);
+            object-fit: contain;
         }
         .gallery-lightbox.show img {
             transform: scale(1);
         }
         .close-lightbox {
             position: absolute;
-            top: 30px;
-            right: 40px;
+            top: 20px;
+            right: 25px;
             color: white;
-            font-size: 45px;
+            font-size: 40px;
             cursor: pointer;
             transition: 0.3s;
             line-height: 1;
+            z-index: 10001;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
         }
         .close-lightbox:hover {
             color: var(--accent-orange);
             transform: rotate(90deg);
+        }
+
+        /* --- MOBILE RESPONSIVE FIXES FOR GALLERY --- */
+        @media (max-width: 768px) {
+            .gallery-section { padding: 50px 15px; }
+            .gallery-container { height: 300px; border-radius: 10px; }
+            .gallery-caption { left: 20px; bottom: 25px; right: 20px;}
+            .gallery-caption h3 { font-size: 1.3rem; margin-bottom: 4px;}
+            .gallery-caption p { font-size: 0.85rem; }
+            .g-dot { width: 8px; height: 8px; }
+            .gallery-lightbox img { max-width: 95%; max-height: 80vh; border-width: 2px; }
+            .close-lightbox { top: 15px; right: 20px; font-size: 35px; }
         }
     </style>
 </head>
@@ -455,6 +466,17 @@
             mobileMenuBtn.innerHTML = navLinksList.classList.contains('active') ? '✕' : '☰';
         });
 
+        // --- NEW: STICKY DARK NAVIGATION ON SCROLL ---
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        // ----------------------------------------------
+
         // Certificate Modal
         var certModal = document.getElementById("certModal");
         var certImg = document.getElementById("certImg");
@@ -486,7 +508,6 @@
 
         function goToGallerySlide(index) {
             currentGalleryIndex = index;
-            // Faster transform animation (0.4s)
             galleryTrack.style.transform = `translateX(-${currentGalleryIndex * 100}%)`;
             
             gDots.forEach((dot, i) => {
@@ -502,7 +523,7 @@
             galleryInterval = setInterval(() => {
                 let nextIndex = (currentGalleryIndex + 1) % slides.length;
                 goToGallerySlide(nextIndex);
-            }, 2500); // Faster autoplay (every 2.5 seconds)
+            }, 2500); 
         }
 
         startGalleryAutoPlay();
@@ -516,11 +537,10 @@
         const lightboxImage = document.getElementById('lightboxImage');
 
         function openGalleryLightbox(element) {
-            // Get the image source from the clicked slide
             const imgSrc = element.querySelector('img').src;
             lightboxImage.src = imgSrc;
             galleryLightbox.classList.add('show');
-            document.body.style.overflow = 'hidden'; // Stop background scrolling
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeGalleryLightbox() {
@@ -529,14 +549,12 @@
             setTimeout(() => { lightboxImage.src = ''; }, 300);
         }
 
-        // Close Lightbox when clicking outside the image
         galleryLightbox.addEventListener('click', function(e) {
             if (e.target === galleryLightbox) {
                 closeGalleryLightbox();
             }
         });
 
-        // Close Lightbox with Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && galleryLightbox.classList.contains('show')) {
                 closeGalleryLightbox();

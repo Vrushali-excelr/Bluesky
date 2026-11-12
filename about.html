@@ -12,7 +12,7 @@
         .page-hero {
             position: relative;
             height: 50vh;
-            min-height: 400px;
+            min-height: 350px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -110,11 +110,31 @@
         .client-info h4 { font-size: 1.1rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;}
         .client-info p { font-size: 0.9rem; color: var(--text-light); font-weight: 600; }
 
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1024px) {
+            .page-hero { background-attachment: scroll; } /* Disable fixed background on mobile/tablets */
+        }
+
         @media (max-width: 900px) {
             .about-split { grid-template-columns: 1fr; gap: 40px; }
-            .page-hero h1 { font-size: 2.5rem; }
+            .page-hero h1 { font-size: 3rem; }
+            .about-text h2 { font-size: 2rem; }
             .vision-card { padding: 30px; }
             .testimonial-text { font-size: 1.2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .page-hero { height: 35vh; min-height: 250px; }
+            .page-hero h1 { font-size: 2.5rem; }
+            .section { padding: 60px 20px; }
+            
+            .vision-card { padding: 25px 20px; }
+            .vision-card h3 { font-size: 1.5rem; }
+            
+            .testimonial-section { padding: 60px 15px; }
+            .testimonial-container { min-height: 300px; }
+            .testimonial-text { font-size: 1.1rem; }
+            .section-header h2 { font-size: 2rem; }
         }
     </style>
 </head>

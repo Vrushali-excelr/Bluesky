@@ -4,7 +4,7 @@
 :root {
     --primary-blue: #0056b3;
     --accent-blue: #00a8ff;
-    --accent-orange: #ff6b00; /* High contrast theme color */
+    --accent-orange: #ff6b00; 
     --dark-navy: #0a192f;
     --darker-navy: #060f1e;
     --light-bg: #f4f7f9;
@@ -33,11 +33,11 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: none; /* Removes the line */
 }
 
 .nav-container {
-    max-width: 1300px;
+    max-width: 1400px; /* Increased max-width to give more room */
     margin: 0 auto;
     padding: 15px 20px;
     display: flex;
@@ -45,14 +45,21 @@ header {
     align-items: center;
 }
 
-.logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-container { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    text-decoration: none; 
+    outline: none; /* <--- This removes the border box */
+}
 .logo-icon { width: 45px; height: 45px; fill: none; stroke: var(--primary-blue); stroke-width: 8; stroke-linecap: round; }
 .logo-icon path:nth-child(2) { stroke: var(--accent-blue); }
 .logo-text { font-size: 26px; font-weight: 900; color: var(--dark-navy); text-transform: uppercase; letter-spacing: -0.5px; }
 .logo-text span { color: var(--accent-orange); }
 
-.nav-links { display: flex; list-style: none; gap: 35px; align-items: center; }
-.nav-links a { text-decoration: none; color: var(--dark-navy); font-weight: 600; font-size: 0.95rem; transition: color 0.3s; }
+.nav-links { display: flex; list-style: none; gap: 30px; align-items: center; }
+.nav-links li { white-space: nowrap; } /* Prevents text from breaking into two lines */
+.nav-links a { text-decoration: none; color: var(--dark-navy); font-weight: 600; font-size: 0.95rem; transition: color 0.3s; display: flex; align-items: center; gap: 4px;}
 .nav-links a:hover, .nav-links a.active { color: var(--accent-orange); }
 
 /* Dropdown Menu */
@@ -70,12 +77,21 @@ header {
     left: 0;
     border-top: 3px solid var(--accent-orange);
 }
-.dropdown-menu li { list-style: none; }
+.dropdown-menu li { list-style: none; white-space: normal; }
 .dropdown-menu a { color: var(--dark-navy); padding: 10px 20px; display: block; font-size: 0.9rem; }
 .dropdown-menu a:hover { background-color: var(--light-bg); color: var(--accent-orange); }
 .dropdown:hover .dropdown-menu { display: block; }
 
-.btn-quote { background: var(--dark-navy); color: var(--white) !important; padding: 12px 28px; border-radius: 4px; font-weight: 700; transition: all 0.3s; }
+.btn-quote { 
+    background: var(--dark-navy); 
+    color: var(--white) !important; 
+    padding: 12px 28px; 
+    border-radius: 4px; 
+    font-weight: 700; 
+    transition: all 0.3s; 
+    white-space: nowrap; /* Prevents the button from being squashed */
+    display: inline-block;
+}
 .btn-quote:hover { background: var(--accent-orange); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255, 107, 0, 0.2); }
 
 .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: var(--dark-navy); }
@@ -210,18 +226,8 @@ footer { background-color: var(--darker-navy); color: var(--white); padding: 80p
 .reveal.active { opacity: 1; transform: translateY(0); }
 
 /* --- RESPONSIVE DESIGN --- */
-@media (max-width: 900px) {
-    .hero-section::after, .hero-section::before { width: 100%; clip-path: none; opacity: 0.2; }
-    .hero-text-box h1 { font-size: 3rem; }
-    .stats-box { grid-template-columns: repeat(2, 1fr); }
-    .stat-item { border-bottom: 1px solid #e2e8f0; }
-    .stat-item:nth-child(even) { border-right: none; }
-    .cert-container { flex-direction: column; text-align: center; padding: 40px 20px; gap: 40px; }
-    .cert-text h3 { justify-content: center; }
-    .cert-text h3::before { display: none; }
-}
-
-@media (max-width: 768px) {
+/* We changed the breakpoint to 1024px to fix the squashed header issue */
+@media (max-width: 1024px) {
     /* Mobile Menu */
     .menu-toggle { display: block; }
     .nav-links { 
@@ -236,39 +242,96 @@ footer { background-color: var(--darker-navy); color: var(--white); padding: 80p
         box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
         border-top: 1px solid #e2e8f0; 
         gap: 20px;
+        align-items: flex-start;
     }
+    .logo-text { font-size: 24px; }
     .nav-links.active { display: flex; }
     .dropdown:hover .dropdown-menu { display: none; } 
+    .dropdown-menu { position: static; box-shadow: none; border: none; padding-left: 20px; display: none; }
+    .dropdown.active .dropdown-menu { display: block; }
     
-    /* Hero Adjustments */
-    .hero-section { padding: 80px 20px; min-height: 80vh; }
-    .hero-text-box h1 { font-size: 2.5rem; margin-bottom: 15px; }
+    .hero-section::after, .hero-section::before { width: 100%; clip-path: none; opacity: 0.15; }
+    .hero-text-box h1 { font-size: 3.5rem; }
+    .stats-box { grid-template-columns: repeat(2, 1fr); max-width: 90%; }
+    .stat-item { border-bottom: 1px solid #e2e8f0; }
+    .stat-item:nth-child(even) { border-right: none; }
+}
+
+@media (max-width: 768px) {
+    /* Hero Section */
+    .hero-section { padding: 60px 20px; min-height: 70vh; align-items: flex-start; padding-top: 100px; }
+    .hero-text-box h1 { font-size: 2.8rem; margin-bottom: 15px; }
     .hero-text-box p { font-size: 1rem; margin-bottom: 30px; }
     .hero-btns { flex-direction: column; width: 100%; gap: 15px; }
     .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 15px; }
 
     /* Stats */
-    .stats-box { grid-template-columns: 1fr; }
-    .stat-item { border-right: none; padding: 30px 20px; }
-    .stat-item h2 { font-size: 2.5rem; }
+    .wix-stats-wrapper { margin-top: -30px; }
+    .stats-box { grid-template-columns: 1fr; max-width: 100%; margin: 0 10px; }
+    .stat-item { border-right: none; border-bottom: 1px solid #e2e8f0; padding: 25px 20px; }
+    .stat-item:last-child { border-bottom: none; }
+    .stat-item h2 { font-size: 2.2rem; }
 
     /* Sections & Grids */
     .section { padding: 60px 20px; }
-    .section-header { margin-bottom: 40px; }
+    .section-header { margin-bottom: 40px; text-align: center; }
     .section-header h2 { font-size: 2rem; }
     .grid-container { grid-template-columns: 1fr; }
-    
+
     /* Cert Section */
-    .cert-text h2 { font-size: 2rem; }
+    .cert-section { padding: 60px 20px; }
+    .cert-container { flex-direction: column; text-align: center; padding: 30px 20px; gap: 30px; }
+    .cert-image { width: 200px; }
+    .cert-text h3 { justify-content: center; }
+    .cert-text h3::before { display: none; }
+    .cert-text h2 { font-size: 1.8rem; }
     .cert-text p { font-size: 1rem; }
 
-    /* Gallery (from index.html) */
-    .gallery-container { height: 300px; }
-    .gallery-caption h3 { font-size: 1.5rem; }
-    .gallery-caption p { font-size: 0.9rem; }
-    .gallery-caption { left: 20px; bottom: 20px; }
-
     /* Footer */
-    .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 30px; text-align: center; }
     .footer-col h4 { margin-bottom: 15px; }
+    .social-icons { justify-content: center; }
+}
+/* --- SCROLLED NAVIGATION EFFECT --- */
+/* --- SCROLLED NAVIGATION EFFECT WITH GRADIENT --- */
+header.scrolled {
+    /* Premium Dark Gradient (Deep Navy to almost Black) */
+    background: linear-gradient(135deg, #0a192f 0%, #060f1e 100%);
+    backdrop-filter: blur(10px); /* Adds a glass-like blur to the background */
+    border-bottom: 1px solid rgba(255,255,255,0.05); /* Very subtle bottom line */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Stronger shadow for depth */
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Change Logo Text Color */
+header.scrolled .logo-text {
+    color: var(--white);
+}
+header.scrolled .logo-text span {
+    color: var(--accent-orange); /* Keeps AC SERVICES orange */
+}
+
+/* Change Navigation Links Color */
+header.scrolled .nav-links a {
+    color: var(--white);
+}
+header.scrolled .nav-links a:hover, 
+header.scrolled .nav-links a.active {
+    color: var(--accent-orange);
+}
+
+/* Ensure the Mobile Menu Toggle is visible on dark bg */
+header.scrolled .menu-toggle {
+    color: var(--white);
+}
+
+/* Make the Get Quote button pop a bit more on dark background */
+header.scrolled .btn-quote {
+    background: var(--accent-orange);
+    color: var(--white) !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+}
+header.scrolled .btn-quote:hover {
+    background: var(--white);
+    color: var(--dark-navy) !important;
 }

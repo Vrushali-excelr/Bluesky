@@ -10,7 +10,7 @@
         .page-hero { 
             position: relative; 
             height: 50vh; 
-            min-height: 400px; 
+            min-height: 350px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
@@ -40,10 +40,6 @@
             max-width: 1300px;
             margin: 0 auto;
             padding: 100px 20px;
-        }
-
-        @media (max-width: 900px) {
-            .contact-layout { grid-template-columns: 1fr; }
         }
 
         /* Clickable Contact Cards */
@@ -112,6 +108,21 @@
         /* Scroll Margin to fix anchor links */
         #quote-form { scroll-margin-top: 100px; }
         #amc { scroll-margin-top: 80px; }
+
+        /* --- MOBILE RESPONSIVE SPECIFIC --- */
+        @media (max-width: 900px) {
+            .contact-layout { grid-template-columns: 1fr; gap: 40px; padding: 60px 20px; }
+            .page-hero h1 { font-size: 2.8rem; }
+            .quote-form-box { padding: 30px 20px; }
+            .quote-form-box h2 { font-size: 1.8rem; }
+            .contact-card { padding: 20px; }
+            .contact-icon { width: 45px; height: 45px; }
+            .contact-icon svg { width: 22px; height: 22px; }
+            
+            /* AMC Section Mobile */
+            .grid-container { grid-template-columns: 1fr !important; gap: 30px !important; }
+            .section-header h2 { font-size: 2rem !important; }
+        }
     </style>
 </head>
 <body>
@@ -224,7 +235,7 @@
         </div>
     </section>
 
-    <!-- AMC PRICING SECTION (UPDATED DESIGN) -->
+    <!-- AMC PRICING SECTION -->
     <section id="amc" class="section" style="background-color: var(--dark-navy); padding: 100px 20px;">
         <div class="section-header reveal" style="text-align: center; margin-bottom: 60px;">
             <h4 style="color: var(--accent-orange); font-weight: 800; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;">Pricing</h4>
@@ -238,7 +249,6 @@
             <div class="reveal" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; text-align: center; padding: 50px 30px; transition: transform 0.3s;">
                 <h3 style="color: var(--white); font-size: 1.5rem; margin-bottom: 20px; font-weight: 700;">Regular AMC Rate</h3>
                 
-                <!-- Fixed Price Display -->
                 <div style="display: flex; justify-content: center; align-items: baseline; margin-bottom: 30px;">
                     <span style="font-size: 2.5rem; color: var(--accent-orange); font-weight: 800; margin-right: 5px;">₹</span>
                     <span style="font-size: 4rem; font-weight: 900; color: var(--white); line-height: 1;">2200</span>
@@ -254,17 +264,15 @@
                 <a href="#quote-form" class="btn-secondary" style="display: block; text-align: center; border-color: rgba(255,255,255,0.2); color: var(--white); padding: 15px; border-radius: 8px; font-weight: 700; text-decoration: none; transition: 0.3s;">Get Started</a>
             </div>
 
-            <!-- BNI Offer Plan (Featured) -->
+            <!-- BNI Offer Plan -->
             <div class="reveal" style="transition-delay: 0.2s; background: linear-gradient(145deg, rgba(255,107,0,0.15) 0%, rgba(10,25,47,1) 100%); border: 2px solid var(--accent-orange); border-radius: 15px; text-align: center; padding: 50px 30px; position: relative; box-shadow: 0 20px 40px rgba(255, 107, 0, 0.15);">
                 
-                <!-- Fixed Badge Position -->
                 <div style="position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--accent-orange); color: white; padding: 8px 25px; border-radius: 30px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 5px 15px rgba(255,107,0,0.4); white-space: nowrap;">
-                     BNI Special Offer
+                    ⭐ BNI Special Offer
                 </div>
                 
                 <h3 style="color: var(--white); font-size: 1.5rem; margin-bottom: 20px; font-weight: 700; margin-top: 10px;">Offer for BNI Members</h3>
                 
-                <!-- Fixed Price Display -->
                 <div style="display: flex; justify-content: center; align-items: baseline; margin-bottom: 30px;">
                     <span style="font-size: 2.5rem; color: var(--white); font-weight: 800; margin-right: 5px;">₹</span>
                     <span style="font-size: 4rem; font-weight: 900; color: var(--white); line-height: 1;">1500</span>
